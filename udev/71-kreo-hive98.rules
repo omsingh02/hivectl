@@ -1,0 +1,5 @@
+# Kreo Hive 98 keyboard (EVision 320f:5055): hidraw access for ~/.local/bin/kreo.
+# uaccess = dynamic ACL for the logged-in seat user (Arch Wiki Udev#Allowing regular users to use
+# devices); must sort before 73-seat-late.rules to take effect.
+# Install: sudo install -m 0644 71-kreo-hive98.rules /etc/udev/rules.d/ && sudo udevadm control --reload && sudo udevadm trigger --subsystem-match=hidraw
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="320f", ATTRS{idProduct}=="5055", MODE="0660", TAG+="uaccess"
