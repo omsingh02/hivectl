@@ -375,21 +375,21 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("map", help="list key names and zones")
 
-    p = sub.add_parser("anim", aliases=["play"], help="stream an animation (Ctrl+C to stop)")
+    p = sub.add_parser("anim", help="stream an animation (Ctrl+C to stop)")
     p.add_argument("name", nargs="?")
     p.add_argument("-l", "--list", action="store_true")
     p.add_argument("--speed", type=float, default=1.0, help="playback speed multiplier")
     p.add_argument("--fps", type=int, help="frame rate (max 45)")
     p.add_argument("--duration", type=float, default=0.0, metavar="SECONDS", help="stop after this long")
 
-    p = sub.add_parser("viz", aliases=["music"], help="music visualizer via cava (Ctrl+C to stop)")
+    p = sub.add_parser("viz", help="music visualizer via cava (Ctrl+C to stop)")
     p.add_argument("-m", "--mode", choices=MODES, default="bars")
     p.add_argument("-s", "--scheme", choices=SCHEMES, default="theme")
     p.add_argument("-S", "--sensitivity", type=float, default=1.3)
     p.add_argument("-f", "--fps", type=int, default=35)
     p.add_argument("-b", "--backend", choices=BACKENDS, default="pulse")
 
-    p = sub.add_parser("hud", aliases=["helper"], help="Hyprland keybind HUD + numpad gauges (Ctrl+C to stop)")
+    p = sub.add_parser("hud", help="Hyprland keybind HUD + numpad gauges (Ctrl+C to stop)")
     p.add_argument("--no-gauges", action="store_true", help="leave the numpad dark")
     p.add_argument("--base", metavar="COLOR", help="dim backlight under everything ('theme' or a color)")
     p.add_argument("--base-level", type=float, default=0.25, help="brightness of --base (0-1)")
@@ -405,8 +405,8 @@ def build_parser() -> argparse.ArgumentParser:
 COMMANDS = {
     "status": cmd_status, "modes": cmd_modes, "set": cmd_set, "on": cmd_power, "off": cmd_power,
     "toggle": cmd_power, "profile": cmd_profile, "custom": cmd_custom, "map": cmd_map,
-    "anim": cmd_anim, "play": cmd_anim, "viz": cmd_viz, "music": cmd_viz, "hud": cmd_hud,
-    "helper": cmd_hud, "backup": cmd_backup, "restore": cmd_restore,
+    "anim": cmd_anim, "viz": cmd_viz, "hud": cmd_hud,
+    "backup": cmd_backup, "restore": cmd_restore,
 }
 
 
