@@ -4,8 +4,8 @@ Rain: drops hit random keys and send out faint rings over a dark blue background
 import math
 import random
 from typing import List, Dict, Any
-from kreo import Effect, EffectContext, Layout, Color, GradientPalette
-from kreo.math import sample_key_samples
+from hivectl import Effect, EffectContext, Layout, Color, GradientPalette
+from hivectl.math import sample_key_samples
 
 class RainEffect(Effect):
     name = "rain"

@@ -7,12 +7,12 @@ import sys
 import time
 from pathlib import Path
 
-from kreo import __version__
-from kreo.color import Color, parse_color, theme_color
-from kreo.constants import FRAME_SIZE, CONFIG_SIZE, LIGHTING_MODES, MAX_BRIGHTNESS, MAX_SPEED, NAMED_COLORS
-from kreo.device import KreoKeyboard, Profile
-from kreo.engine import StreamLock, run
-from kreo.layout import GLOBAL_LAYOUT, ZONES
+from hivectl import __version__
+from hivectl.color import Color, parse_color, theme_color
+from hivectl.constants import FRAME_SIZE, CONFIG_SIZE, LIGHTING_MODES, MAX_BRIGHTNESS, MAX_SPEED, NAMED_COLORS
+from hivectl.device import KreoKeyboard, Profile
+from hivectl.engine import StreamLock, run
+from hivectl.layout import GLOBAL_LAYOUT, ZONES
 
 MODE_NAMES = {mode_id: name for name, (mode_id, _) in LIGHTING_MODES.items()}
 
@@ -94,7 +94,7 @@ def resolve_mode(text: str) -> int:
     try:
         return int(text, 0)
     except ValueError:
-        raise ValueError(f"unknown mode '{text}' (see: kreo modes)") from None
+        raise ValueError(f"unknown mode '{text}' (see: hivectl modes)") from None
 
 
 def cmd_set(args):
@@ -116,7 +116,7 @@ def cmd_set(args):
     elif "color" in fields:
         fields["rainbow"] = False  # an explicit color means a fixed color
     if not fields:
-        raise SystemExit("nothing to change (see: kreo set -h)")
+        raise SystemExit("nothing to change (see: hivectl set -h)")
 
     idx = args.profile - 1 if args.profile else None
     with StreamLock(), KreoKeyboard() as kbd:
@@ -169,7 +169,7 @@ def cmd_custom(args):
                 keys = [GLOBAL_LAYOUT.get(name) for name in args.keys]
                 unknown = [n for n, k in zip(args.keys, keys) if k is None]
                 if unknown:
-                    raise SystemExit(f"unknown key(s): {', '.join(unknown)} (see: kreo map)")
+                    raise SystemExit(f"unknown key(s): {', '.join(unknown)} (see: hivectl map)")
             elif args.action == "zone":
                 keys = GLOBAL_LAYOUT.get_zone(args.zone)
             else:
@@ -195,10 +195,10 @@ def cmd_map(args):
 
 
 def cmd_backup(args):
-    path = Path(args.file or f"kreo-backup-{time.strftime('%Y%m%d-%H%M%S')}.json").expanduser()
+    path = Path(args.file or f"hivectl-backup-{time.strftime('%Y%m%d-%H%M%S')}.json").expanduser()
     with KreoKeyboard() as kbd:
         data = {
-            "format": "kreo-backup-3",
+            "format": "hivectl-backup-1",
             "created": time.strftime("%Y-%m-%d %H:%M:%S"),
             "config": kbd.read_config().hex(),
             "custom_leds": kbd.read_custom_leds().hex(),
@@ -211,11 +211,11 @@ def cmd_backup(args):
 def cmd_restore(args):
     data = json.loads(Path(args.file).expanduser().read_text(encoding="utf-8"))
     try:
-        assert data["format"] == "kreo-backup-3"
+        assert data["format"] in ("hivectl-backup-1", "kreo-backup-3")
         config, leds = bytes.fromhex(data["config"]), bytes.fromhex(data["custom_leds"])
         assert len(config) == CONFIG_SIZE and len(leds) == FRAME_SIZE
     except (AssertionError, KeyError, TypeError, ValueError):
-        raise SystemExit(f"{args.file} is not a complete backup made by 'kreo backup'") from None
+        raise SystemExit(f"{args.file} is not a complete backup made by 'hivectl backup'") from None
     with StreamLock(), KreoKeyboard() as kbd:
         kbd.write_config(0, config)
         kbd.write_custom_leds(leds)
@@ -225,7 +225,7 @@ def cmd_restore(args):
 # -- streaming -----------------------------------------------------------------------
 
 def cmd_anim(args):
-    from kreo.sdk import discover_effects
+    from hivectl.sdk import discover_effects
     effects = discover_effects()
     if args.list or not args.name:
         for name, cls in effects.items():
@@ -239,12 +239,12 @@ def cmd_anim(args):
 
 
 def cmd_viz(args):
-    from kreo.visualizer import Visualizer
+    from hivectl.visualizer import Visualizer
     run(Visualizer(args.mode, args.scheme, args.sensitivity, args.backend, args.fps), fps=args.fps)
 
 
 def cmd_hud(args):
-    from kreo.hud import HudEffect
+    from hivectl.hud import HudEffect
     base = None
     if args.base:
         base = Color.rgb(*(theme_color()[:3] if args.base == "theme" else parse_color(args.base)))
@@ -255,8 +255,8 @@ def cmd_hud(args):
 # -- interactive menu ----------------------------------------------------------------
 
 def cmd_menu(args):
-    from kreo.sdk import discover_effects
-    from kreo.visualizer import MODES, SCHEMES
+    from hivectl.sdk import discover_effects
+    from hivectl.visualizer import MODES, SCHEMES
 
     def ask(prompt):
         try:
@@ -307,11 +307,11 @@ def cmd_menu(args):
                 mode = ask(f"mode ({'/'.join(MODES)}) [bars]: ") or "bars"
                 scheme = ask(f"colors ({'/'.join(SCHEMES)}) [theme]: ") or "theme"
                 if mode in MODES and scheme in SCHEMES:
-                    from kreo.visualizer import Visualizer
+                    from hivectl.visualizer import Visualizer
                     print("Ctrl+C to stop")
                     run(Visualizer(mode, scheme), fps=35)
             elif choice == "h":
-                from kreo.hud import HudEffect
+                from hivectl.hud import HudEffect
                 print("Ctrl+C to stop")
                 run(HudEffect())
         except (ValueError, RuntimeError, OSError) as e:
@@ -328,17 +328,17 @@ def positive_float(text: str) -> float:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    from kreo.visualizer import MODES, SCHEMES, BACKENDS
-    parser = argparse.ArgumentParser(prog="kreo", description="Kreo Hive 98 lighting control. "
+    from hivectl.visualizer import MODES, SCHEMES, BACKENDS
+    parser = argparse.ArgumentParser(prog="hivectl", description="Kreo Hive 98 lighting control. "
                                      "Run without a command for an interactive menu.")
-    parser.add_argument("--version", action="version", version=f"kreo {__version__}")
+    parser.add_argument("--version", action="version", version=f"hivectl {__version__}")
     sub = parser.add_subparsers(dest="command", metavar="command")
 
     sub.add_parser("status", help="show the three onboard profiles (and Pegasus mouse battery)")
     sub.add_parser("modes", help="list the built-in hardware lighting modes")
 
     p = sub.add_parser("set", help="change the stored lighting of a profile")
-    p.add_argument("-m", "--mode", help="mode name or id (see: kreo modes)")
+    p.add_argument("-m", "--mode", help="mode name or id (see: hivectl modes)")
     color = p.add_mutually_exclusive_group()
     color.add_argument("-c", "--color", help="#RRGGBB or a color name")
     color.add_argument("-t", "--theme", action="store_true", help="use the pywal accent color")
@@ -397,7 +397,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("backup", help="save profiles and per-key colors to a JSON file")
     p.add_argument("file", nargs="?")
-    p = sub.add_parser("restore", help="write a backup made with 'kreo backup' back to the keyboard")
+    p = sub.add_parser("restore", help="write a backup made with 'hivectl backup' back to the keyboard")
     p.add_argument("file")
     return parser
 
@@ -418,7 +418,7 @@ def main():
     except KeyboardInterrupt:
         print()
     except (RuntimeError, OSError, ValueError) as e:
-        sys.exit(f"kreo: {e}")
+        sys.exit(f"hivectl: {e}")
 
 
 if __name__ == "__main__":

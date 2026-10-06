@@ -3,7 +3,7 @@ Perimeter: a comet runs clockwise around the outer ring of keys; each lap fires 
 outward from the middle of the typing area.
 """
 import math
-from kreo import Effect, EffectContext, Layout, Color, GradientPalette
+from hivectl import Effect, EffectContext, Layout, Color, GradientPalette
 
 
 class PerimeterEffect(Effect):

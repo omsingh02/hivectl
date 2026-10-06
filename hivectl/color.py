@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 from typing import Tuple
 
-from kreo.constants import NAMED_COLORS
+from hivectl.constants import NAMED_COLORS
 
 
 class Color:

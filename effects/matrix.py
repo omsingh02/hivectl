@@ -2,8 +2,8 @@
 Matrix: green code rain falling down 24 columns, with white-hot heads and fading trails.
 """
 import math
-from kreo import Effect, EffectContext, Layout, Color
-from kreo.math import sample_key_samples
+from hivectl import Effect, EffectContext, Layout, Color
+from hivectl.math import sample_key_samples
 
 
 class MatrixEffect(Effect):

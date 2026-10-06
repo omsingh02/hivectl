@@ -3,8 +3,8 @@ Supernova: 14-second story centered on the typing area - a pulsing star, a colla
 blue vortex, a moment of darkness, a white blast wave across the board, then a fading nebula.
 """
 import math
-from kreo import Effect, EffectContext, Layout, Color, GradientPalette
-from kreo.math import fbm3d, sample_key_samples
+from hivectl import Effect, EffectContext, Layout, Color, GradientPalette
+from hivectl.math import fbm3d, sample_key_samples
 
 class SupernovaEffect(Effect):
     name = "supernova"

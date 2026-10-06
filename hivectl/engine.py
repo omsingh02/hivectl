@@ -8,22 +8,22 @@ import signal
 import sys
 import time
 
-from kreo.canvas import Canvas
-from kreo.device import KreoKeyboard
-from kreo.input import InputMonitor
-from kreo.layout import GLOBAL_LAYOUT
-from kreo.sdk import Effect, EffectContext
+from hivectl.canvas import Canvas
+from hivectl.device import KreoKeyboard
+from hivectl.input import InputMonitor
+from hivectl.layout import GLOBAL_LAYOUT
+from hivectl.sdk import Effect, EffectContext
 
 MAX_FPS = 45            # one frame is 7 USB round trips (~21 ms)
 KEEPALIVE_SEC = 0.1     # an unchanged frame is re-sent at this interval only
 
 
 class StreamLock:
-    """Only one kreo process can stream frames at a time."""
+    """Only one hivectl process can stream frames at a time."""
 
     def __init__(self):
         runtime_dir = os.environ.get("XDG_RUNTIME_DIR") or "/tmp"
-        self.path = os.path.join(runtime_dir, f"kreo-{os.getuid()}.lock")
+        self.path = os.path.join(runtime_dir, f"hivectl-{os.getuid()}.lock")
         self.file = None
 
     def __enter__(self):
@@ -34,7 +34,7 @@ class StreamLock:
             self.file.seek(0)
             pid = self.file.read().strip() or "?"
             self.file.close()
-            raise RuntimeError(f"another kreo stream is already running (pid {pid}); stop it first")
+            raise RuntimeError(f"another hivectl stream is already running (pid {pid}); stop it first")
         self.file.truncate(0)
         self.file.write(str(os.getpid()))
         self.file.flush()

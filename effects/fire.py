@@ -2,8 +2,8 @@
 Fire: flames rising from the bottom row, hottest at the spacebar, fading out at the F-keys.
 """
 import math
-from kreo import Effect, EffectContext, Layout, Color, GradientPalette
-from kreo.math import fbm3d, perlin3d, sample_key_samples
+from hivectl import Effect, EffectContext, Layout, Color, GradientPalette
+from hivectl.math import fbm3d, perlin3d, sample_key_samples
 
 
 class FireEffect(Effect):

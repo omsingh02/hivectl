@@ -2,8 +2,8 @@
 Aurora: slow green/cyan/violet curtains drifting across the board (fractal noise).
 """
 import math
-from kreo import Effect, EffectContext, Layout, Color, GradientPalette
-from kreo.math import fbm3d, sample_key_samples
+from hivectl import Effect, EffectContext, Layout, Color, GradientPalette
+from hivectl.math import fbm3d, sample_key_samples
 
 class AuroraEffect(Effect):
     name = "aurora"

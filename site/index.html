@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>kreo — Linux lighting control for the Kreo Hive 98</title>
+<title>hivectl — Linux lighting control for the Kreo Hive 98</title>
 <meta name="description" content="Hardware lighting, live animations, a music visualizer and a Hyprland keybind HUD for the Kreo Hive 98 keyboard on Linux. Pure Python, no dependencies.">
-<meta property="og:title" content="kreo — your Kreo Hive 98, fully alive on Linux">
+<meta property="og:title" content="hivectl — your Kreo Hive 98, fully alive on Linux">
 <meta property="og:description" content="Animations, music visualizer, Hyprland keybind HUD and per-key RGB for the Kreo Hive 98. Pure Python.">
 <meta name="theme-color" content="#07070b">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='8' width='26' height='16' rx='4' fill='%2307070b' stroke='%2300f0ff' stroke-width='2'/><rect x='7' y='12' width='4' height='3' rx='1' fill='%23ff007f'/><rect x='14' y='12' width='4' height='3' rx='1' fill='%236a00f4'/><rect x='21' y='12' width='4' height='3' rx='1' fill='%23ff5400'/><rect x='9' y='17' width='14' height='3' rx='1' fill='%2300f0ff'/></svg>">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 <style>
 :root{--bg:#07070b;--fg:#e9e9f1;--dim:#8b8b9e;--line:#1f1f2b;--cyan:#00f0ff;--pink:#ff007f;--violet:#7c4dff;--amber:#ffb700}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -21,7 +21,7 @@ code,pre,kbd{font-family:ui-monospace,"JetBrains Mono","Fira Code",Menlo,monospa
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
 .logo{font-weight:800;letter-spacing:-.02em;font-size:20px;display:flex;gap:10px;align-items:center}
-.logo i{width:12px;height:12px;border-radius:3px;background:conic-gradient(var(--cyan),var(--violet),var(--pink),var(--amber),var(--cyan));box-shadow:0 0 16px var(--cyan)}
+.logo img{filter:drop-shadow(0 0 10px #00f0ff66)}
 nav .links{display:flex;gap:22px;color:var(--dim);font-size:14px}
 nav .links a:hover{color:var(--fg)}
 header{text-align:center;padding:56px 0 28px}
@@ -67,20 +67,20 @@ footer{padding:90px 0 50px;color:var(--dim);font-size:14px;display:flex;justify-
 <body>
 <div class="wrap">
   <nav>
-    <div class="logo"><i></i>kreo</div>
-    <div class="links"><a href="#features">Features</a><a href="#install">Install</a><a href="#hud">HUD</a><a href="https://github.com/omsingh02/kreo">GitHub</a></div>
+    <div class="logo"><img src="logo.svg" width="28" height="28" alt="">hivectl</div>
+    <div class="links"><a href="#features">Features</a><a href="#install">Install</a><a href="#hud">HUD</a><a href="https://github.com/omsingh02/hivectl">GitHub</a></div>
   </nav>
 
   <header>
     <div class="pill"><b></b>Open source · Linux · Pure Python</div>
     <h1>Your Kreo Hive 98,<br><span>fully alive on Linux.</span></h1>
     <p class="lead">Hardware lighting, per-key RGB, live animations, a music visualizer and a Hyprland keybind HUD for the Kreo Hive 98. No vendor app, no dependencies, just Python talking straight to the keyboard.</p>
-    <div class="cta"><a class="btn primary" href="#install">Get started</a><a class="btn" href="https://github.com/omsingh02/kreo">★ Star on GitHub</a></div>
+    <div class="cta"><a class="btn primary" href="#install">Get started</a><a class="btn" href="https://github.com/omsingh02/hivectl">★ Star on GitHub</a></div>
   </header>
 
   <div class="board"><canvas id="kb"></canvas></div>
   <div class="chips" id="chips"></div>
-  <p class="hint">Live preview of the real effects. Start typing: your keystrokes ripple across the board, just like <kbd>kreo anim reactive</kbd>.</p>
+  <p class="hint">Live preview of the real effects. Start typing: your keystrokes ripple across the board, just like <kbd>hivectl anim reactive</kbd>.</p>
 
   <section id="features">
     <h2>Real hardware control. Plus the fun stuff.</h2>
@@ -96,23 +96,23 @@ footer{padding:90px 0 50px;color:var(--dim);font-size:14px;display:flex;justify-
   <section id="install">
     <h2>Up and running in a minute</h2>
     <p class="sub">Plug the keyboard in by cable, give your user access to it, install.</p>
-    <div class="term"><div class="bar"><i></i><i></i><i></i><span data-copy>copy</span></div><pre><span class="k">git clone</span> https://github.com/omsingh02/kreo && <span class="k">cd</span> kreo
+    <div class="term"><div class="bar"><i></i><i></i><i></i><span data-copy>copy</span></div><pre><span class="k">git clone</span> https://github.com/omsingh02/hivectl && <span class="k">cd</span> hivectl
 <span class="k">sudo install</span> -m 0644 udev/71-kreo-hive98.rules /etc/udev/rules.d/
 <span class="k">sudo udevadm</span> control --reload && <span class="k">sudo udevadm</span> trigger --subsystem-match=hidraw
 <span class="k">pipx install</span> --editable .</pre></div>
     <div class="two">
       <div class="term"><div class="bar"><i></i><i></i><i></i></div><pre><span class="c"># stored on the keyboard</span>
-<span class="k">kreo</span> status
-<span class="k">kreo</span> set -m ripple -c <span class="s">"#00F0FF"</span> -s 1
-<span class="k">kreo</span> set -t            <span class="c"># pywal accent color</span>
-<span class="k">kreo</span> custom zone wasd cyan --apply
-<span class="k">kreo</span> off | on | toggle</pre></div>
+<span class="k">hivectl</span> status
+<span class="k">hivectl</span> set -m ripple -c <span class="s">"#00F0FF"</span> -s 1
+<span class="k">hivectl</span> set -t            <span class="c"># pywal accent color</span>
+<span class="k">hivectl</span> custom zone wasd cyan --apply
+<span class="k">hivectl</span> off | on | toggle</pre></div>
       <div class="term"><div class="bar"><i></i><i></i><i></i></div><pre><span class="c"># streamed live, Ctrl+C to stop</span>
-<span class="k">kreo</span> anim fire
-<span class="k">kreo</span> anim reactive
-<span class="k">kreo</span> viz -m pulse -s fire
-<span class="k">kreo</span> hud
-<span class="k">kreo</span>                 <span class="c"># interactive menu</span></pre></div>
+<span class="k">hivectl</span> anim fire
+<span class="k">hivectl</span> anim reactive
+<span class="k">hivectl</span> viz -m pulse -s fire
+<span class="k">hivectl</span> hud
+<span class="k">hivectl</span>                 <span class="c"># interactive menu</span></pre></div>
     </div>
   </section>
 
@@ -123,7 +123,7 @@ footer{padding:90px 0 50px;color:var(--dim);font-size:14px;display:flex;justify-
     <p class="hint">Holding <kbd>Super</kbd>: workspace 3 active, 1 · 2 · 5 have windows; CPU, RAM, battery and volume on the numpad.</p>
   </section>
 
-  <footer><span>MIT licensed · not affiliated with Kreo</span><a href="https://github.com/omsingh02/kreo">github.com/omsingh02/kreo →</a></footer>
+  <footer><span>MIT © 2026 Om Singh · not affiliated with Kreo</span><a href="https://github.com/omsingh02/hivectl">github.com/omsingh02/hivectl →</a></footer>
 </div>
 
 <script>

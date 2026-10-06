@@ -9,7 +9,7 @@ import time
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from kreo.constants import (
+from hivectl.constants import (
     VENDOR_ID, PRODUCT_ID, VENDOR_INTERFACE, REPORT_ID, PACKET_SIZE, HEADER_SIZE, CHUNK_SIZE,
     CMD_BEGIN_CONFIG, CMD_END_CONFIG, CMD_READ_CONFIG, CMD_WRITE_CONFIG, CMD_READ_KEYMAP,
     CMD_READ_CUSTOM_LEDS, CMD_WRITE_CUSTOM_LEDS, CMD_SEND_FRAME, CMD_END_FRAME,

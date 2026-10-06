@@ -2,8 +2,8 @@
 Scanner: red beam sweeping left/right across the whole board with a fading trail.
 """
 import math
-from kreo import Effect, EffectContext, Layout, Color, GradientPalette
-from kreo.math import sample_key_samples
+from hivectl import Effect, EffectContext, Layout, Color, GradientPalette
+from hivectl.math import sample_key_samples
 
 class ScannerEffect(Effect):
     name = "scanner"

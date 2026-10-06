@@ -14,9 +14,9 @@ import subprocess
 import threading
 from typing import Dict, List, Optional
 
-from kreo.color import Color
-from kreo.layout import Layout
-from kreo.sdk import Effect, EffectContext
+from hivectl.color import Color
+from hivectl.layout import Layout
+from hivectl.sdk import Effect, EffectContext
 
 # Hyprland modmask bits
 SHIFT, CTRL, ALT, SUPER = 1, 4, 8, 64

@@ -8,9 +8,9 @@ import os
 import time
 from typing import Dict, List, NamedTuple, Set
 
-from kreo.constants import KEYBOARD_INTERFACE, VENDOR_INTERFACE, NKRO_REPORT_ID
-from kreo.device import DeviceNotFound, find_hidraw
-from kreo.layout import GLOBAL_LAYOUT, Key, Layout
+from hivectl.constants import KEYBOARD_INTERFACE, VENDOR_INTERFACE, NKRO_REPORT_ID
+from hivectl.device import DeviceNotFound, find_hidraw
+from hivectl.layout import GLOBAL_LAYOUT, Key, Layout
 
 # USB HID keyboard-page usages for the keys on the board
 USAGES: Dict[str, int] = {chr(ord("A") + i): 0x04 + i for i in range(26)}

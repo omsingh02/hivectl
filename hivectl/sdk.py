@@ -6,9 +6,9 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Set, Type
 
-from kreo.canvas import Canvas
-from kreo.constants import EFFECTS_DIR
-from kreo.layout import Key, Layout
+from hivectl.canvas import Canvas
+from hivectl.constants import EFFECTS_DIR
+from hivectl.layout import Key, Layout
 
 REPO_EFFECTS_DIR = Path(__file__).resolve().parent.parent / "effects"
 
@@ -62,7 +62,7 @@ class Effect:
 
 
 def _load_module(path: Path):
-    spec = importlib.util.spec_from_file_location(f"kreo_effect_{path.stem}", str(path))
+    spec = importlib.util.spec_from_file_location(f"hivectl_effect_{path.stem}", str(path))
     mod = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = mod  # dataclasses and friends look the module up while it loads
     try:
@@ -74,7 +74,7 @@ def _load_module(path: Path):
 
 
 def discover_effects() -> Dict[str, Type[Effect]]:
-    """Effect classes by file name, from the repo effects/ dir and ~/.config/kreo/effects/
+    """Effect classes by file name, from the repo effects/ dir and ~/.config/hivectl/effects/
     (a user file with the same name replaces the built-in)."""
     found: Dict[str, Type[Effect]] = {}
     dirs = [d for d in (REPO_EFFECTS_DIR, EFFECTS_DIR) if d.is_dir()]

@@ -11,10 +11,10 @@ import threading
 import time
 from typing import List
 
-from kreo.color import Color, theme_color
-from kreo.layout import Key, Layout
-from kreo.palette import GradientPalette
-from kreo.sdk import Effect, EffectContext
+from hivectl.color import Color, theme_color
+from hivectl.layout import Key, Layout
+from hivectl.palette import GradientPalette
+from hivectl.sdk import Effect, EffectContext
 
 BANDS = 18
 MODES = ("bars", "pulse", "wave")
@@ -81,7 +81,7 @@ class Visualizer(Effect):
                f"[input]\nmethod = {self.backend}\nsource = auto\n"
                "[output]\nmethod = raw\nraw_target = /dev/stdout\ndata_format = binary\n"
                "bit_format = 8bit\nchannels = mono\n")
-        with tempfile.NamedTemporaryFile("w", prefix="kreo-cava-", suffix=".cfg", delete=False) as f:
+        with tempfile.NamedTemporaryFile("w", prefix="hivectl-cava-", suffix=".cfg", delete=False) as f:
             f.write(cfg)
             self.cfg_path = f.name
         try:

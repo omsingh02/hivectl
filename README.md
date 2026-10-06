@@ -1,12 +1,14 @@
 <div align="center">
 
-# kreo
+<img src="docs/logo.svg" width="96" alt="hivectl logo">
+
+# hivectl
 
 **Your Kreo Hive 98, fully alive on Linux.**
 
 Hardware lighting · per-key RGB · live animations · music visualizer · Hyprland keybind HUD
 
-[![Website](https://img.shields.io/badge/live_demo-kreo--hive98.vercel.app-00F0FF?style=flat-square)](https://kreo-hive98.vercel.app)
+[![Website](https://img.shields.io/badge/live_demo-hivectl.vercel.app-00F0FF?style=flat-square)](https://hivectl.vercel.app)
 ![Python](https://img.shields.io/badge/python-3.9+-7C4DFF?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Linux-FF007F?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-FFB700?style=flat-square)
@@ -17,7 +19,7 @@ Hardware lighting · per-key RGB · live animations · music visualizer · Hyprl
 
 ---
 
-`kreo` drives the Kreo Hive 98 (EVision controller, USB `320F:5055`) straight over `hidraw`.
+`hivectl` drives the Kreo Hive 98 (EVision controller, USB `320F:5055`) straight over `hidraw`.
 There's no vendor app, no daemon you have to trust, and no dependencies beyond Python 3.9.
 Every setting it writes to the keyboard is read back to confirm it, and it never writes the keymap.
 
@@ -30,12 +32,27 @@ Every setting it writes to the keyboard is read back to confirm it, and it never
 | **Live animations** | `fire` `aurora` `matrix` `supernova` `ripple` `rain` `scanner` `chroma` `perimeter` `heartbeat` `reactive`, streamed at up to 45 fps. |
 | **Music visualizer** | Spectrum bars, bass pulse or wave across all 98 keys, fed by [cava](https://github.com/karlstav/cava) from PipeWire/PulseAudio. |
 | **Hyprland HUD** | Hold Super/Alt/Ctrl/Shift and every key bound to that combination lights up, colored by what it does. Workspaces on the number row, CPU/RAM/battery/volume on the numpad. |
-| **Write your own** | An animation is a ~15-line Python class dropped into `~/.config/kreo/effects/`. |
+| **Write your own** | An animation is a ~15-line Python class dropped into `~/.config/hivectl/effects/`. |
+
+## Gallery
+
+Rendered from the real effect code (`python tools/render_previews.py`). The visualizer GIFs use simulated audio.
+
+<table>
+<tr><td align="center"><img src="docs/effects/aurora.gif" width="400" alt="Aurora"><br><code>hivectl anim aurora</code></td><td align="center"><img src="docs/effects/chroma.gif" width="400" alt="Chroma"><br><code>hivectl anim chroma</code></td></tr>
+<tr><td align="center"><img src="docs/effects/fire.gif" width="400" alt="Fire"><br><code>hivectl anim fire</code></td><td align="center"><img src="docs/effects/matrix.gif" width="400" alt="Matrix rain"><br><code>hivectl anim matrix</code></td></tr>
+<tr><td align="center"><img src="docs/effects/supernova.gif" width="400" alt="Supernova"><br><code>hivectl anim supernova</code></td><td align="center"><img src="docs/effects/ripple.gif" width="400" alt="Ripple"><br><code>hivectl anim ripple</code></td></tr>
+<tr><td align="center"><img src="docs/effects/rain.gif" width="400" alt="Rain"><br><code>hivectl anim rain</code></td><td align="center"><img src="docs/effects/scanner.gif" width="400" alt="Scanner"><br><code>hivectl anim scanner</code></td></tr>
+<tr><td align="center"><img src="docs/effects/perimeter.gif" width="400" alt="Perimeter"><br><code>hivectl anim perimeter</code></td><td align="center"><img src="docs/effects/heartbeat.gif" width="400" alt="Heartbeat"><br><code>hivectl anim heartbeat</code></td></tr>
+<tr><td align="center"><img src="docs/effects/reactive.gif" width="400" alt="Reactive (typing)"><br><code>hivectl anim reactive</code></td><td align="center"><img src="docs/effects/hud.gif" width="400" alt="Hyprland HUD"><br><code>hivectl hud</code></td></tr>
+<tr><td align="center"><img src="docs/effects/viz-bars.gif" width="400" alt="Visualizer · bars"><br><code>hivectl viz -m bars</code></td><td align="center"><img src="docs/effects/viz-pulse.gif" width="400" alt="Visualizer · pulse"><br><code>hivectl viz -m pulse</code></td></tr>
+<tr><td align="center"><img src="docs/effects/viz-wave.gif" width="400" alt="Visualizer · wave"><br><code>hivectl viz -m wave</code></td></tr>
+</table>
 
 ## Install
 
 ```bash
-git clone https://github.com/omsingh02/kreo && cd kreo
+git clone https://github.com/omsingh02/hivectl && cd hivectl
 
 # let your user talk to the keyboard (no root needed afterwards)
 sudo install -m 0644 udev/71-kreo-hive98.rules /etc/udev/rules.d/
@@ -45,45 +62,45 @@ pipx install --editable .
 ```
 
 The keyboard has to be connected by cable. Optional extras: `cava` for the visualizer and
-`python-dbus` to show the Kreo Pegasus mouse battery in `kreo status`.
+`python-dbus` to show the Kreo Pegasus mouse battery in `hivectl status`.
 
 ## Usage
 
 ```bash
-kreo                                   # interactive menu
-kreo status                            # the three onboard profiles
-kreo modes                             # list hardware modes
+hivectl                                   # interactive menu
+hivectl status                            # the three onboard profiles
+hivectl modes                             # list hardware modes
 ```
 
 **Stored on the keyboard**
 
 ```bash
-kreo set -m ripple -c "#00F0FF" -s 1   # mode, color, speed (0 fast … 5 slow)
-kreo set -b 2 --rainbow                # brightness 0-4, color cycling
-kreo set -t                            # pywal accent color
-kreo set -m wave --preview 5           # try for 5 s, then restore
-kreo on | off | toggle
-kreo profile 2                         # switch profile
-kreo custom zone wasd cyan --apply     # per-key colors (+ switch to mode "custom")
-kreo custom set ESC F12 red            # single keys; see `kreo map` for names
-kreo custom show                       # draw the stored per-key colors
-kreo backup / kreo restore FILE        # save and restore profiles + per-key colors
+hivectl set -m ripple -c "#00F0FF" -s 1   # mode, color, speed (0 fast … 5 slow)
+hivectl set -b 2 --rainbow                # brightness 0-4, color cycling
+hivectl set -t                            # pywal accent color
+hivectl set -m wave --preview 5           # try for 5 s, then restore
+hivectl on | off | toggle
+hivectl profile 2                         # switch profile
+hivectl custom zone wasd cyan --apply     # per-key colors (+ switch to mode "custom")
+hivectl custom set ESC F12 red            # single keys; see `hivectl map` for names
+hivectl custom show                       # draw the stored per-key colors
+hivectl backup / hivectl restore FILE        # save and restore profiles + per-key colors
 ```
 
 **Streamed live (Ctrl+C to stop; the keyboard returns to its profile)**
 
 ```bash
-kreo anim --list
-kreo anim fire --speed 1.5
-kreo viz -m pulse -s fire              # bars | pulse | wave, theme | vu | fire | ice | rainbow
-kreo hud                               # Hyprland keybind HUD
+hivectl anim --list
+hivectl anim fire --speed 1.5
+hivectl viz -m pulse -s fire              # bars | pulse | wave, theme | vu | fire | ice | rainbow
+hivectl hud                               # Hyprland keybind HUD
 ```
 
 Only one stream can run at a time, and profile changes are refused while one runs.
 
 ## Hyprland HUD
 
-`kreo hud` reads your binds live from `hyprctl binds`, so it always matches your config.
+`hivectl hud` reads your binds live from `hyprctl binds`, so it always matches your config.
 
 - **Hold a modifier:** keys bound to that combination light up. Cyan launches, amber moves windows and workspaces, green is media/volume, red kills/exits, violet enters a submap.
 - **Number row:** workspaces. Cyan is active, white has windows, slate is empty.
@@ -92,16 +109,16 @@ Only one stream can run at a time, and profile changes are refused while one run
 Run it at login:
 
 ```bash
-systemctl --user link $PWD/systemd/kreo.service
-systemctl --user enable --now kreo.service
+systemctl --user link $PWD/systemd/hivectl.service
+systemctl --user enable --now hivectl.service
 ```
 
 ## Write an animation
 
-The file name is the command name: `~/.config/kreo/effects/sweep.py` → `kreo anim sweep`.
+The file name is the command name: `~/.config/hivectl/effects/sweep.py` → `hivectl anim sweep`.
 
 ```python
-from kreo import Effect, EffectContext, Layout, Color, GradientPalette
+from hivectl import Effect, EffectContext, Layout, Color, GradientPalette
 
 class Sweep(Effect):
     title = "Sweep"
@@ -136,8 +153,8 @@ bitmap (report `0x01`) on interface 1.
 
 ## Notes
 
-- Only tested on the wired Hive 98. Other EVision boards may work with a different layout table (`kreo/layout.py`).
-- `kreo restore` only accepts files from `kreo backup`.
+- Only tested on the wired Hive 98. Other EVision boards may work with a different layout table (`hivectl/layout.py`).
+- `hivectl restore` only accepts files from `hivectl backup`.
 - Not affiliated with Kreo.
 
-MIT © 2026 faulter
+MIT © 2026 Om Singh

@@ -3,8 +3,8 @@ Reactive: pressed keys flash and send out rings; Space launches a wave up the bo
 Enter sweeps a line back to the left edge. Reads keystrokes straight from the keyboard.
 """
 import math
-from kreo import Effect, EffectContext, Layout, Color
-from kreo.math import sample_key_samples
+from hivectl import Effect, EffectContext, Layout, Color
+from hivectl.math import sample_key_samples
 
 KEY_COLORS = [Color.rgb(0, 240, 255), Color.rgb(0, 255, 180), Color.rgb(120, 100, 255),
               Color.rgb(255, 0, 140), Color.rgb(255, 180, 0)]

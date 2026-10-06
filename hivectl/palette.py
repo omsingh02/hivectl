@@ -3,7 +3,7 @@ Multi-stop linear color gradient.
 """
 from typing import List, Tuple
 
-from kreo.color import Color
+from hivectl.color import Color
 
 
 class GradientPalette:

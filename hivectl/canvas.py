@@ -3,9 +3,9 @@ Per-slot framebuffer, serialized to the 384-byte frame the keyboard expects.
 """
 from typing import List, Optional, Union
 
-from kreo.color import Color, BLACK
-from kreo.constants import NUM_SLOTS, FRAME_SIZE
-from kreo.layout import Key, Layout, GLOBAL_LAYOUT
+from hivectl.color import Color, BLACK
+from hivectl.constants import NUM_SLOTS, FRAME_SIZE
+from hivectl.layout import Key, Layout, GLOBAL_LAYOUT
 
 
 def _cie_lut() -> List[int]:

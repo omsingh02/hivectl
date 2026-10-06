@@ -1,8 +1,8 @@
 """
 Chroma: diagonal cyan/violet/magenta/amber gradient sweeping across the board.
 """
-from kreo import Effect, EffectContext, Layout, Color, GradientPalette
-from kreo.math import sample_key_samples
+from hivectl import Effect, EffectContext, Layout, Color, GradientPalette
+from hivectl.math import sample_key_samples
 
 class ChromaEffect(Effect):
     name = "chroma"

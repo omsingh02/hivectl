@@ -66,7 +66,7 @@ LIGHTING_MODES = {
     "visor":     (0x10, "Visor"),
     "surmount":  (0x11, "Surmount"),
     "circle":    (0x12, "Rainbow circle"),
-    "custom":    (0x14, "Per-key colors stored on the keyboard (kreo custom)"),
+    "custom":    (0x14, "Per-key colors stored on the keyboard (hivectl custom)"),
 }
 
 NAMED_COLORS = {
@@ -88,4 +88,4 @@ NAMED_COLORS = {
     "black":   (0, 0, 0),
 }
 
-EFFECTS_DIR = Path.home() / ".config/kreo/effects"
+EFFECTS_DIR = Path.home() / ".config/hivectl/effects"
