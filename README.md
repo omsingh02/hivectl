@@ -54,7 +54,8 @@ Rendered from the real effect code (`python tools/render_previews.py`). The visu
 ```bash
 git clone https://github.com/omsingh02/hivectl && cd hivectl
 
-# let your user talk to the keyboard (no root needed afterwards)
+# let your user talk to the keyboard (no root needed afterwards); the rule also
+# starts the HUD on plug-in if you opt in (see Hyprland HUD below)
 sudo install -m 0644 udev/71-kreo-hive98.rules /etc/udev/rules.d/
 sudo udevadm control --reload && sudo udevadm trigger --subsystem-match=hidraw
 
@@ -106,12 +107,23 @@ Only one stream can run at a time, and profile changes are refused while one run
 - **Number row:** workspaces. Cyan is active, white has windows, slate is empty.
 - **Numpad:** CPU, RAM, battery and volume gauges (`--no-gauges` to switch off, `--base theme` adds a dim backlight).
 
-Run it at login:
+Run it automatically whenever the keyboard is plugged in:
 
 ```bash
 systemctl --user link $PWD/systemd/hivectl.service
-systemctl --user enable --now hivectl.service
 ```
+
+The udev rule starts it when the keyboard appears, also at login if it's already connected, and
+the unit is bound to the device, so it stops on unplug instead of retrying. Unplugging, or using the
+board wirelessly, leaves it stopped.
+
+```bash
+systemctl --user stop hivectl      # pause it until the next plug-in or login (anim/viz/set need this)
+systemctl --user disable hivectl   # opt out again (removes the link)
+journalctl --user -u hivectl       # logs
+```
+
+Linking only makes the unit available; there is nothing to `enable`.
 
 ## Write an animation
 

@@ -1,13 +1,17 @@
-# Runs the Hyprland keybind HUD. Install: systemctl --user link $PWD/systemd/hivectl.service
-# then: systemctl --user enable --now hivectl.service
+# Hyprland keybind HUD for the Kreo Hive 98.
+# Started by udev when the keyboard is plugged in (udev/71-kreo-hive98.rules) and stopped when it
+# is unplugged, so it never runs without the keyboard. There is no [Install] section on purpose:
+# link the unit instead of enabling it.
+#   systemctl --user link $PWD/systemd/hivectl.service
 [Unit]
-Description=Kreo Hive 98 Hyprland keybind HUD
-After=graphical-session.target
+Description=hivectl Hyprland keybind HUD (Kreo Hive 98)
+BindsTo=dev-hive98.device
+After=dev-hive98.device
+# a HUD that keeps crashing with the keyboard attached gives up instead of looping
+StartLimitIntervalSec=60
+StartLimitBurst=5
 
 [Service]
 ExecStart=%h/.local/bin/hivectl hud
 Restart=on-failure
 RestartSec=3
-
-[Install]
-WantedBy=default.target

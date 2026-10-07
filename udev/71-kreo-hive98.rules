@@ -1,5 +1,10 @@
-# Kreo Hive 98 keyboard (EVision 320f:5055): hidraw access for ~/.local/bin/kreo.
-# uaccess = dynamic ACL for the logged-in seat user (Arch Wiki Udev#Allowing regular users to use
-# devices); must sort before 73-seat-late.rules to take effect.
-# Install: sudo install -m 0644 71-kreo-hive98.rules /etc/udev/rules.d/ && sudo udevadm control --reload && sudo udevadm trigger --subsystem-match=hidraw
-SUBSYSTEM=="hidraw", ATTRS{idVendor}=="320f", ATTRS{idProduct}=="5055", MODE="0660", TAG+="uaccess"
+# Kreo Hive 98 (EVision 320F:5055), wired.
+# 1. Access for the user logged in at the seat (uaccess must sort before 73-seat-late.rules).
+# 2. The vendor-interface node (USB interface 1) becomes /dev/hive98 and the systemd device
+#    unit dev-hive98.device, and asks the user's service manager to start hivectl.service.
+#    Nothing starts unless the user has linked that unit (see systemd/hivectl.service).
+# Install: sudo install -m 0644 udev/71-kreo-hive98.rules /etc/udev/rules.d/
+#          sudo udevadm control --reload && sudo udevadm trigger --subsystem-match=hidraw
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="320f", ATTRS{idProduct}=="5055", MODE="0660", TAG+="uaccess", ENV{HIVECTL_KEYBOARD}="1"
+# idVendor and bInterfaceNumber live on different parent devices, so match the interface separately
+SUBSYSTEM=="hidraw", ENV{HIVECTL_KEYBOARD}=="1", ATTRS{bInterfaceNumber}=="01", SYMLINK+="hive98", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="hivectl.service"

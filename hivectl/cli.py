@@ -2,6 +2,7 @@
 Command line interface.
 """
 import argparse
+import errno
 import json
 import sys
 import time
@@ -417,7 +418,12 @@ def main():
         handler(args)
     except KeyboardInterrupt:
         print()
-    except (RuntimeError, OSError, ValueError) as e:
+    except OSError as e:
+        if e.errno in (errno.ENODEV, errno.EIO) and args.command in ("anim", "viz", "hud"):
+            print("hivectl: keyboard disconnected", file=sys.stderr)  # a normal end for a stream
+            return
+        sys.exit(f"hivectl: {e}")
+    except (RuntimeError, ValueError) as e:
         sys.exit(f"hivectl: {e}")
 
 

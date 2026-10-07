@@ -1,7 +1,7 @@
 """
 Linux driver, effect engine and tools for the Kreo Hive 98 keyboard (EVision 320F:5055).
 """
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 from hivectl.color import Color
 from hivectl.palette import GradientPalette

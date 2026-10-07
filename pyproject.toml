@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hivectl"
-version = "1.0.0"
+version = "1.0.1"
 description = "Linux lighting control for the Kreo Hive 98: hardware modes, per-key RGB, animations, music visualizer, Hyprland HUD"
 readme = "README.md"
 authors = [{ name = "Om Singh" }]
