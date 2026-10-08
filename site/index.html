@@ -35,6 +35,7 @@ h1 span{background:linear-gradient(92deg,var(--cyan),var(--violet) 35%,var(--pin
 .btn{padding:13px 22px;border-radius:12px;font-weight:650;font-size:15px;border:1px solid var(--line);background:#ffffff08;transition:.2s}
 .btn:hover{transform:translateY(-2px);border-color:#ffffff30}
 .btn.primary{background:var(--fg);color:#07070b;border-color:transparent;box-shadow:0 8px 40px #00f0ff40}
+#kb{cursor:pointer;touch-action:manipulation}
 .board{margin:44px auto 0;max-width:1060px;padding:22px;border-radius:26px;background:linear-gradient(180deg,#14141c,#0b0b10);border:1px solid #262634;box-shadow:0 40px 120px -20px #000,0 0 0 1px #ffffff05 inset,0 1px 0 #ffffff10 inset}
 canvas{width:100%;display:block}
 .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:22px}
@@ -80,7 +81,7 @@ footer{padding:90px 0 50px;color:var(--dim);font-size:14px;display:flex;justify-
 
   <div class="board"><canvas id="kb"></canvas></div>
   <div class="chips" id="chips"></div>
-  <p class="hint">Live preview of the real effects. Start typing: your keystrokes ripple across the board, just like <kbd>hivectl anim reactive</kbd>.</p>
+  <p class="hint">Live preview of the real effects. Type, or click the keys: they ripple across the board, just like <kbd>hivectl anim reactive</kbd>.</p>
 
   <section id="features">
     <h2>Real hardware control. Plus the fun stuff.</h2>
@@ -156,7 +157,8 @@ const EFFECTS = {
 };
 let current = "chroma";
 const chips = document.getElementById("chips");
-for (const name of [...Object.keys(EFFECTS), "reactive"]) { const b = document.createElement("button"); b.className = "chip" + (name === current ? " on" : ""); b.textContent = name; b.onclick = () => { current = name; for (const c of chips.children) c.classList.toggle("on", c === b); }; chips.appendChild(b); }
+const select = name => { current = name; for (const c of chips.children) c.classList.toggle("on", c.textContent === name); };
+for (const name of [...Object.keys(EFFECTS), "reactive"]) { const b = document.createElement("button"); b.className = "chip" + (name === current ? " on" : ""); b.textContent = name; b.onclick = () => { select(name); b.blur(); }; chips.appendChild(b); }
 
 function board(canvas) { const g = canvas.getContext("2d"); const fit = () => { const w = canvas.clientWidth, d = devicePixelRatio || 1; canvas.width = w * d; canvas.height = w * 6 / 19.25 * d; canvas.style.height = w * 6 / 19.25 + "px"; }; fit(); addEventListener("resize", fit); return g; }
 function draw(g, colors) { const W = g.canvas.width, s = W / 19.25, r = s * .16; g.clearRect(0, 0, W, g.canvas.height);
@@ -166,12 +168,20 @@ function draw(g, colors) { const W = g.canvas.width, s = W / 19.25, r = s * .16;
     g.strokeStyle = "#ffffff10"; g.stroke();
     if (k[1]) { g.fillStyle = cr * .3 + cg * .59 + cb * .11 > .55 ? "#0009" : "#fff8"; g.font = `600 ${s * .2}px ui-monospace,monospace`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(k[1], x + w / 2, y + h / 2); } }); }
 
-const main = board(document.getElementById("kb")), strikes = [], t0 = performance.now();
-const byCode = Object.fromEntries(KEYS.map((k, i) => [k[2], i]));
-addEventListener("keydown", e => { const i = byCode[e.code]; if (i === undefined || e.repeat) return; strikes.push({i, t: (performance.now() - t0) / 1000, c: [[0,.94,1],[0,1,.7],[.47,.39,1],[1,0,.55],[1,.7,0]][strikes.length % 5]}); if (["Space", "ArrowUp", "ArrowDown", "Tab", "Quote", "Slash"].includes(e.code)) e.preventDefault(); });
-function frame() { const t = (performance.now() - t0) / 1000;
+const kb = document.getElementById("kb"), main = board(kb), strikes = [], t0 = performance.now(), now = () => (performance.now() - t0) / 1000;
+const byCode = Object.fromEntries(KEYS.map((k, i) => [k[2], i])), byName = Object.fromEntries(KEYS.map((k, i) => [k[0], i]));
+const HUES = [[0,.94,1],[0,1,.7],[.47,.39,1],[1,0,.55],[1,.7,0]], GHOST = ["H","I","V","E","C","T","L","ENTER"];
+const HOME = new Set(["A","S","D","G","H","K","L","SEMICOLON","QUOTE"]), HOMING = new Set(["F","J"]);
+let hits = 0, lastReal = -10, ghostAt = 0, ghostIdx = 0;
+// a real key press or tap switches to reactive; ghost strikes (the idle demo) don't
+function strike(i, real) { strikes.push({i, t: now(), c: HUES[hits++ % 5]}); if (real) { lastReal = now(); if (current !== "reactive") select("reactive"); } }
+addEventListener("keydown", e => { const i = byCode[e.code]; if (i === undefined || e.repeat || e.ctrlKey || e.metaKey || e.altKey) return; strike(i, true); if (["Space", "ArrowUp", "ArrowDown", "Tab", "Quote", "Slash"].includes(e.code)) e.preventDefault(); });
+kb.addEventListener("pointerdown", e => { const s = kb.clientWidth / 19.25, x = e.offsetX / s, y = e.offsetY / s, i = KEYS.findIndex(k => x >= k[3] && x < k[3] + k[5] && y >= k[4] && y < k[4] + k[6]); if (i >= 0) strike(i, true); });
+function frame() { const t = now();
   while (strikes.length && t - strikes[0].t > 1.3) strikes.shift();
-  const fx = EFFECTS[current], colors = KEYS.map(k => fx ? fx(k, t).map(v => (current === "reactive" ? 0 : 1) * v) : [0, 0, 0]);
+  if (current === "reactive" && t - lastReal > 3 && t >= ghostAt) { const g = GHOST[ghostIdx++ % GHOST.length]; strike(byName[g], false); ghostAt = t + (g === "ENTER" ? 2.2 : .18); }
+  const fx = EFFECTS[current], breath = .2 + .15 * Math.sin(t * 1.8);
+  const colors = KEYS.map(k => fx ? fx(k, t) : HOMING.has(k[0]) ? [1, .63, .08].map(v => v * Math.min(1, breath * 1.5)) : HOME.has(k[0]) ? [0, .24, .35].map(v => v * breath) : [0, 0, 0]);
   for (const st of strikes) { const dt = t - st.t, o = KEYS[st.i]; KEYS.forEach((k, i) => { let a = 0; if (i === st.i) a = Math.exp(-dt / .35) + Math.max(0, 1 - dt * 9); const off = Math.abs(Math.hypot(cx(k) - cx(o), cy(k) - cy(o)) - dt * 12); if (off < 1.3 && dt * 12 < 9) a += Math.cos(off / 1.3 * Math.PI / 2) ** 2 * Math.exp(-dt / .45) * .85; if (a > 0) colors[i] = colors[i].map((v, j) => Math.min(1, v + st.c[j] * a + (i === st.i ? Math.max(0, 1 - dt * 9) : 0))); }); }
   draw(main, colors); requestAnimationFrame(frame); }
 frame();
