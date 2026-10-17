@@ -8,6 +8,7 @@
 
 Hardware lighting · per-key RGB · live animations · music visualizer · Hyprland keybind HUD
 
+[![CI](https://github.com/omsingh02/hivectl/actions/workflows/ci.yml/badge.svg)](https://github.com/omsingh02/hivectl/actions/workflows/ci.yml)
 [![Website](https://img.shields.io/badge/live_demo-hivectl.vercel.app-00F0FF?style=flat-square)](https://hivectl.vercel.app)
 ![Python](https://img.shields.io/badge/python-3.9+-7C4DFF?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Linux-FF007F?style=flat-square)
