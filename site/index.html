@@ -2,206 +2,258 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hivectl — Linux lighting control for the Kreo Hive 98</title>
-<meta name="description" content="Hardware lighting, live animations, a music visualizer and a Hyprland keybind HUD for the Kreo Hive 98 keyboard on Linux. Pure Python, no dependencies.">
-<meta property="og:title" content="hivectl — your Kreo Hive 98, fully alive on Linux">
-<meta property="og:description" content="Animations, music visualizer, Hyprland keybind HUD and per-key RGB for the Kreo Hive 98. Pure Python.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>hivectl: lighting control for the Kreo Hive 98 on Linux</title>
+<meta name="description" content="Modes, per-key colors, live animations, a music visualizer and a Hyprland keybind HUD for the Kreo Hive 98. No vendor app.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://hivectl.vercel.app/">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4IiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDBGMEZGIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iLjM4IiBzdG9wLWNvbG9yPSIjN0M0REZGIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iLjciIHN0b3AtY29sb3I9IiNGRjAwN0YiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkZCNzAwIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGZpbHRlciBpZD0iZ2xvdyIgeD0iLTYwJSIgeT0iLTYwJSIgd2lkdGg9IjIyMCUiIGhlaWdodD0iMjIwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNiIvPjwvZmlsdGVyPgogIDwvZGVmcz4KICA8cGF0aCBkPSJNNjQgOSBMMTExLjYgMzYuNSBWOTEuNSBMNjQgMTE5IEwxNi40IDkxLjUgVjM2LjUgWiIgZmlsbD0iIzBCMEIxMSIgc3Ryb2tlPSJ1cmwoI2cpIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cmVjdCB4PSI0MyIgeT0iNDMiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgcng9IjEwIiBmaWxsPSJ1cmwoI2cpIiBmaWx0ZXI9InVybCgjZ2xvdykiIG9wYWNpdHk9Ii44Ii8+CiAgPHJlY3QgeD0iNDMiIHk9IjQzIiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIHJ4PSIxMCIgZmlsbD0idXJsKCNnKSIvPgogIDxyZWN0IHg9IjQ5LjUiIHk9IjQ4LjUiIHdpZHRoPSIyOSIgaGVpZ2h0PSIyNCIgcng9IjYiIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9Ii4yMiIvPgo8L3N2Zz4K" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hivectl.vercel.app/">
+<meta property="og:title" content="hivectl: lighting control for the Kreo Hive 98 on Linux">
+<meta property="og:description" content="Modes, per-key colors, live animations, a music visualizer and a Hyprland keybind HUD for the Kreo Hive 98. No vendor app.">
 <meta property="og:image" content="https://hivectl.vercel.app/og.jpg">
-<meta property="og:image:secure_url" content="https://hivectl.vercel.app/og.jpg">
-<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="hivectl — Linux lighting control for the Kreo Hive 98">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://hivectl.vercel.app/og.jpg">
-<meta name="theme-color" content="#07070b">
-<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;600;700&display=swap">
 <style>
-:root{--bg:#07070b;--fg:#e9e9f1;--dim:#8b8b9e;--line:#1f1f2b;--cyan:#00f0ff;--pink:#ff007f;--violet:#7c4dff;--amber:#ffb700}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,sans-serif;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(40% 35% at 20% 10%,#00f0ff22,transparent 70%),radial-gradient(35% 30% at 85% 15%,#ff007f22,transparent 70%),radial-gradient(45% 40% at 50% 100%,#7c4dff1c,transparent 70%);animation:drift 18s ease-in-out infinite alternate}
-@keyframes drift{to{transform:translate3d(3%,2%,0) rotate(3deg)}}
-a{color:inherit;text-decoration:none}
-code,pre,kbd{font-family:ui-monospace,"JetBrains Mono","Fira Code",Menlo,monospace}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
-.logo{font-weight:800;letter-spacing:-.02em;font-size:20px;display:flex;gap:10px;align-items:center}
-.logo img{filter:drop-shadow(0 0 10px #00f0ff66)}
-nav .links{display:flex;gap:22px;color:var(--dim);font-size:14px}
-nav .links a:hover{color:var(--fg)}
-header{text-align:center;padding:56px 0 28px}
-.pill{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:var(--dim);border:1px solid var(--line);background:#ffffff06;padding:6px 14px;border-radius:999px;margin-bottom:26px}
-.pill b{width:7px;height:7px;border-radius:50%;background:#2bff88;box-shadow:0 0 10px #2bff88}
-h1{font-size:clamp(42px,7vw,84px);line-height:1.02;letter-spacing:-.045em;font-weight:850}
-h1 span{background:linear-gradient(92deg,var(--cyan),var(--violet) 35%,var(--pink) 65%,var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:sheen 8s linear infinite}
-@keyframes sheen{to{background-position:-200% 0}}
-.lead{max-width:680px;margin:22px auto 0;color:var(--dim);font-size:clamp(16px,2vw,19px)}
-.cta{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
-.btn{padding:13px 22px;border-radius:12px;font-weight:650;font-size:15px;border:1px solid var(--line);background:#ffffff08;transition:.2s}
-.btn:hover{transform:translateY(-2px);border-color:#ffffff30}
-.btn.primary{background:var(--fg);color:#07070b;border-color:transparent;box-shadow:0 8px 40px #00f0ff40}
-#kb{cursor:pointer;touch-action:manipulation}
-.board{margin:44px auto 0;max-width:1060px;padding:22px;border-radius:26px;background:linear-gradient(180deg,#14141c,#0b0b10);border:1px solid #262634;box-shadow:0 40px 120px -20px #000,0 0 0 1px #ffffff05 inset,0 1px 0 #ffffff10 inset}
-canvas{width:100%;display:block}
-.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:22px}
-.chip{font:600 13px ui-monospace,monospace;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:#ffffff05;color:var(--dim);cursor:pointer;transition:.15s}
-.chip:hover{color:var(--fg)}
-.chip.on{color:#07070b;background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 24px #00f0ff60}
-.hint{color:var(--dim);font-size:13px;text-align:center;margin-top:14px}
-.hint kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:12px;color:var(--fg)}
-section{padding:90px 0 0}
-h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.03em;font-weight:800;margin-bottom:12px}
-.sub{color:var(--dim);max-width:640px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:34px}
-.card{padding:24px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(180deg,#ffffff07,#ffffff02);position:relative;overflow:hidden}
-.card:after{content:"";position:absolute;inset:auto -40% -60% auto;width:220px;height:220px;border-radius:50%;background:var(--c);filter:blur(70px);opacity:.18}
-.card h3{font-size:18px;margin:14px 0 6px}
-.card p{color:var(--dim);font-size:15px}
-.card .ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:#ffffff08;border:1px solid var(--line);font-size:18px}
-.term{margin-top:30px;border-radius:16px;border:1px solid var(--line);background:#0b0b11;overflow:hidden}
-.term .bar{display:flex;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line);align-items:center}
-.term .bar i{width:11px;height:11px;border-radius:50%;background:#2a2a36}
-.term .bar span{margin-left:auto;font:12px ui-monospace,monospace;color:var(--dim);cursor:pointer}
-.term pre{padding:20px 22px;overflow-x:auto;font-size:14px;line-height:1.75;color:#cfd0dc}
-.term .c{color:#5d5d72}.term .k{color:var(--cyan)}.term .s{color:var(--amber)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:820px){.two{grid-template-columns:1fr}nav .links{display:none}}
-.note{margin-top:16px;font-size:14px;color:var(--dim)}
-footer{padding:90px 0 50px;color:var(--dim);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+:root{--bg:#e7e9ec;--ink:#14161a;--mute:#535a66;--line:#c4c9d1;--accent:#0b6b7a;--code:#171a20;--codeink:#d8dce4;--codemute:#8a92a0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101216;--ink:#e9ebef;--mute:#9aa1ad;--line:#2b2f37;--accent:#5cd0df;--code:#181b22}}
+:root[data-theme="dark"]{--bg:#101216;--ink:#e9ebef;--mute:#9aa1ad;--line:#2b2f37;--accent:#5cd0df;--code:#181b22}
+html{background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit;text-underline-offset:3px}
+code,pre{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{width:min(1080px,100% - 40px);margin:0 auto}
+nav{display:flex;justify-content:space-between;align-items:baseline;padding:22px 0;font-size:15px}
+nav .mark{font:500 16px "IBM Plex Mono",monospace;text-decoration:none}
+nav div{display:flex;gap:22px}
+nav div a{color:var(--mute)}
+nav div a:hover{color:var(--ink)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:32px 48px;align-items:end;margin:28px 0 0}
+.demo{grid-column:1/-1}
+h1{margin:0;font-size:clamp(34px,4.8vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:700}
+.lead{margin:18px 0 0;max-width:46ch;color:var(--mute);font-size:18px}
+.start .term{margin-top:0}
+.start .term pre{font-size:12.5px}
+.meta{margin:12px 0 0;color:var(--mute);font-size:14px}
+.case{background:#0c0d10;border:1px solid #262930;border-radius:14px;padding:clamp(8px,2vw,22px)}
+canvas{display:block;width:100%;aspect-ratio:19.25/6;touch-action:manipulation}
+#kb{border-radius:8px}
+.fx{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.fx button{padding:6px 13px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--ink);font:600 14px/1.4 inherit;cursor:pointer}
+.fx button:hover{border-color:var(--mute)}
+.fx button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.hint{margin:12px 0 0;max-width:70ch;color:var(--mute);font-size:14px}
+section{padding-top:104px}
+h2{margin:0;font-size:clamp(24px,3.2vw,32px);line-height:1.2;letter-spacing:-.02em;font-weight:700}
+.sub{margin:10px 0 0;max-width:64ch;color:var(--mute)}
+code{font-size:.88em}
+p code,dd code,.sub code{padding:1px 5px;border-radius:4px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+dl{margin:32px 0 0;border-bottom:1px solid var(--line)}
+dl div{display:grid;grid-template-columns:230px 1fr;gap:8px 32px;padding:20px 0;border-top:1px solid var(--line)}
+dt{font-weight:600}
+dd{margin:0;max-width:64ch;color:var(--mute)}
+.readout{min-height:1.7em;margin:14px 0 0;font:400 14px "IBM Plex Mono",monospace}
+.legend{display:flex;flex-wrap:wrap;gap:6px 24px;margin:8px 0 0;padding:0;list-style:none;font-size:14px;color:var(--mute)}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:8px;border-radius:3px;background:var(--c)}
+.term{overflow:hidden;margin-top:28px;border:1px solid var(--line);border-radius:8px;background:var(--code);color:var(--codeink)}
+.term header{display:flex;justify-content:space-between;align-items:center;padding:8px 8px 8px 16px;border-bottom:1px solid #2a2e36;color:var(--codemute);font-size:13px}
+.term button{padding:4px 11px;border:1px solid #3a3f49;border-radius:5px;background:transparent;color:var(--codeink);font:500 13px inherit;cursor:pointer}
+.term button:hover{border-color:var(--codemute)}
+.term pre{margin:0;padding:16px;overflow-x:auto;font-size:13.5px;line-height:1.75}
+.c{color:var(--codemute)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.notes{margin:28px 0 0;max-width:70ch;color:var(--mute);font-size:15px}
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;margin-top:104px;padding:28px 0 44px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+footer div{display:flex;gap:20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:1100px){.hero{grid-template-columns:minmax(0,1fr)}.hero>div:first-child{order:1}.demo{order:2}.start{order:3}}
+@media (max-width:900px){.pair{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){dl div{grid-template-columns:1fr}section{padding-top:80px}nav div{gap:16px}}
+@media (pointer:coarse),(max-width:760px){nav a{display:inline-block;padding:10px 2px}.fx button{min-height:42px;padding:8px 14px}.term button{min-height:38px}}
+@media (max-width:600px){.term pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12.5px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <nav>
-    <div class="logo"><img src="logo.svg" width="28" height="28" alt="">hivectl</div>
-    <div class="links"><a href="#features">Features</a><a href="#install">Install</a><a href="#hud">HUD</a><a href="https://github.com/omsingh02/hivectl">GitHub</a></div>
-  </nav>
+<nav aria-label="Primary">
+  <a class="mark" href="#">hivectl</a>
+  <div><a href="#hud">HUD</a><a href="#usage">Usage</a><a href="https://github.com/omsingh02/hivectl">GitHub</a></div>
+</nav>
 
-  <header>
-    <div class="pill"><b></b>Open source · Linux · Pure Python</div>
-    <h1>Your Kreo Hive 98,<br><span>fully alive on Linux.</span></h1>
-    <p class="lead">Hardware lighting, per-key RGB, live animations, a music visualizer and a Hyprland keybind HUD for the Kreo Hive 98. No vendor app, no dependencies, just Python talking straight to the keyboard.</p>
-    <div class="cta"><a class="btn primary" href="#install">Get started</a><a class="btn" href="https://github.com/omsingh02/hivectl">★ Star on GitHub</a></div>
-  </header>
-
-  <div class="board"><canvas id="kb"></canvas></div>
-  <div class="chips" id="chips"></div>
-  <p class="hint">Live preview of the real effects. Type, or click the keys: they ripple across the board, just like <kbd>hivectl anim reactive</kbd>.</p>
+<main>
+  <div class="hero">
+    <div>
+      <h1>Lighting control for the Kreo Hive 98 on Linux</h1>
+      <p class="lead">Pick a hardware mode, color single keys, run live animations or a music visualizer, all from the terminal. No vendor app needed.</p>
+    </div>
+    <div class="start">
+      <div class="term"><header><span>Install</span><button type="button" data-copy>Copy</button></header><pre>git clone https://github.com/omsingh02/hivectl &amp;&amp; cd hivectl
+sudo install -m 0644 udev/71-kreo-hive98.rules /etc/udev/rules.d/
+sudo udevadm control --reload
+sudo udevadm trigger --subsystem-match=hidraw
+pipx install --editable .</pre></div>
+      <p class="meta">Needs Python 3.9+ and a wired Hive 98. Only the udev rule needs sudo, and hivectl never writes the keymap.</p>
+    </div>
+    <div class="demo">
+  <div class="case"><canvas id="kb" tabindex="0" role="group" aria-label="Interactive preview of the Kreo Hive 98 lighting" aria-describedby="kbhint"></canvas></div>
+  <div class="fx" id="fx" role="group" aria-label="Lighting effect"></div>
+  <p class="hint" id="kbhint">Browser preview of the effects. Click the board, then type.</p>
+    </div>
+  </div>
 
   <section id="features">
-    <h2>Real hardware control. Plus the fun stuff.</h2>
-    <p class="sub">Every write is checked by reading it back, and the keymap is never touched.</p>
-    <div class="grid">
-      <div class="card" style="--c:var(--cyan)"><div class="ico">◐</div><h3>Hardware lighting</h3><p>All 19 built-in modes, colors, brightness, speed, three onboard profiles and per-key colors stored on the keyboard.</p></div>
-      <div class="card" style="--c:var(--pink)"><div class="ico">✦</div><h3>Live animations</h3><p>Fire, aurora, matrix rain, supernova, ripple, scanner and more, streamed at up to 45 fps. Write your own in a few lines.</p></div>
-      <div class="card" style="--c:var(--amber)"><div class="ico">♫</div><h3>Music visualizer</h3><p>Spectrum bars, bass pulses or waves from whatever is playing, captured through cava from PipeWire or PulseAudio.</p></div>
-      <div class="card" style="--c:var(--violet)"><div class="ico">⌘</div><h3>Hyprland HUD</h3><p>Hold Super and every key you have bound lights up, colored by what it does. Workspaces on the number row, system gauges on the numpad.</p></div>
-    </div>
-  </section>
-
-  <section id="install">
-    <h2>Up and running in a minute</h2>
-    <p class="sub">Plug the keyboard in by cable, give your user access to it, install.</p>
-    <div class="term"><div class="bar"><i></i><i></i><i></i><span data-copy>copy</span></div><pre><span class="k">git clone</span> https://github.com/omsingh02/hivectl && <span class="k">cd</span> hivectl
-<span class="k">sudo install</span> -m 0644 udev/71-kreo-hive98.rules /etc/udev/rules.d/
-<span class="k">sudo udevadm</span> control --reload && <span class="k">sudo udevadm</span> trigger --subsystem-match=hidraw
-<span class="k">pipx install</span> --editable .</pre></div>
-    <div class="two">
-      <div class="term"><div class="bar"><i></i><i></i><i></i></div><pre><span class="c"># stored on the keyboard</span>
-<span class="k">hivectl</span> status
-<span class="k">hivectl</span> set -m ripple -c <span class="s">"#00F0FF"</span> -s 1
-<span class="k">hivectl</span> set -t            <span class="c"># pywal accent color</span>
-<span class="k">hivectl</span> custom zone wasd cyan --apply
-<span class="k">hivectl</span> off | on | toggle</pre></div>
-      <div class="term"><div class="bar"><i></i><i></i><i></i></div><pre><span class="c"># streamed live, Ctrl+C to stop</span>
-<span class="k">hivectl</span> anim fire
-<span class="k">hivectl</span> anim reactive
-<span class="k">hivectl</span> viz -m pulse -s fire
-<span class="k">hivectl</span> hud
-<span class="k">hivectl</span>                 <span class="c"># interactive menu</span></pre></div>
-    </div>
+    <h2>What it does</h2>
+    <dl>
+      <div><dt>Hardware modes</dt><dd>Built-in modes such as wave, ripple and breathing, with color, brightness, speed and three profiles. Saved on the keyboard, so they work without the PC.</dd></div>
+      <div><dt>Per-key colors</dt><dd>Color single keys or zones like <code>wasd</code> and <code>numpad</code>. Saved on the keyboard.</dd></div>
+      <div><dt>Live animations</dt><dd>Fire, aurora, matrix, supernova and more, at up to 45 fps. Write your own in about 15 lines of Python.</dd></div>
+      <div><dt>Music visualizer</dt><dd>Spectrum bars, bass pulse or wave across all 98 keys. Needs <code>cava</code>.</dd></div>
+      <div><dt>Hyprland HUD</dt><dd>Hold Super, Alt, Ctrl or Shift and every key bound to it lights up, colored by what it does.</dd></div>
+    </dl>
   </section>
 
   <section id="hud">
-    <h2>A HUD that reads your actual config</h2>
-    <p class="sub">The HUD pulls your binds from <code>hyprctl binds</code>, so it always matches your config. Cyan launches, amber moves windows, green is media and volume, red kills and exits.</p>
-    <div class="board" style="margin-top:30px"><canvas id="hudkb"></canvas></div>
-    <p class="hint">Holding <kbd>Super</kbd>: workspace 3 active, 1 · 2 · 5 have windows; CPU, RAM, battery and volume on the numpad.</p>
+    <h2>See your Hyprland binds on the keys</h2>
+    <p class="sub"><code>hivectl hud</code> reads <code>hyprctl binds</code>, so holding Super lights up whatever you have bound. The number row shows workspaces and the numpad shows CPU, RAM, battery and volume. Example binds shown.</p>
+    <div class="case" style="margin-top:28px"><canvas id="hudkb" role="img" aria-label="The Hive 98 with Super held. Keys bound to Super are lit by category; the legend below lists the categories."></canvas></div>
+    <p class="readout" id="readout">Hover or tap a key to see what it does.</p>
+    <ul class="legend">
+      <li><i style="--c:#00f0ff"></i>Launch an app, or active workspace</li>
+      <li><i style="--c:#ffb000"></i>Move windows and workspaces</li>
+      <li><i style="--c:#0fd97d"></i>Media and volume</li>
+      <li><i style="--c:#f5405e"></i>Close or exit</li>
+      <li><i style="--c:#9966ff"></i>Enter a submap</li>
+      <li><i style="--c:#ffffff"></i>Workspace with windows</li>
+      <li><i style="--c:#333f54"></i>Empty workspace</li>
+    </ul>
   </section>
 
-  <footer><span>MIT © 2026 Om Singh · not affiliated with Kreo</span><a href="https://github.com/omsingh02/hivectl">github.com/omsingh02/hivectl →</a></footer>
+  <section id="usage">
+    <h2>Usage</h2>
+    <p class="sub">Stored commands live on the keyboard. Streamed ones stop with Ctrl+C.</p>
+    <div class="pair">
+      <div class="term"><header><span>Stored on the keyboard</span><button type="button" data-copy>Copy</button></header><pre>hivectl status
+hivectl set -m ripple -c "#00F0FF" -s 1
+hivectl set -t            <span class="c"># pywal accent</span>
+hivectl custom zone wasd cyan --apply
+hivectl on | off | toggle</pre></div>
+      <div class="term"><header><span>Streamed live</span><button type="button" data-copy>Copy</button></header><pre>hivectl anim fire --speed 1.5
+hivectl anim reactive
+hivectl viz -m pulse -s fire
+hivectl hud
+hivectl                   <span class="c"># interactive menu</span></pre></div>
+    </div>
+    <p class="notes">Every setting is read back to confirm it. Only one stream runs at a time. Tested on the wired Hive 98 only (USB <code>320F:5055</code>).</p>
+  </section>
+</main>
+
+<footer>
+  <span>MIT © 2026 Om Singh. Not affiliated with Kreo.</span>
+  <div><a href="https://github.com/omsingh02/hivectl">Source</a><a href="https://github.com/omsingh02/hivectl/issues">Issues</a></div>
+</footer>
 </div>
+<div class="sr" id="live" aria-live="polite"></div>
 
 <script>
-const KEYS = [["ESC","esc","Escape",0.0,0.0,1.0,1.0],["F1","f1","F1",1.75,0.0,1.0,1.0],["F2","f2","F2",2.75,0.0,1.0,1.0],["F3","f3","F3",3.75,0.0,1.0,1.0],["F4","f4","F4",4.75,0.0,1.0,1.0],["F5","f5","F5",6.25,0.0,1.0,1.0],["F6","f6","F6",7.25,0.0,1.0,1.0],["F7","f7","F7",8.25,0.0,1.0,1.0],["F8","f8","F8",9.25,0.0,1.0,1.0],["F9","f9","F9",10.75,0.0,1.0,1.0],["F10","f10","F10",11.75,0.0,1.0,1.0],["F11","f11","F11",12.75,0.0,1.0,1.0],["F12","f12","F12",13.75,0.0,1.0,1.0],["PRINTSCREEN","prt","PrintScreen",15.25,0.0,1.0,1.0],["DELETE","del","Delete",16.25,0.0,1.0,1.0],["PAGEUP","pgup","PageUp",17.25,0.0,1.0,1.0],["PAGEDOWN","pgdn","PageDown",18.25,0.0,1.0,1.0],["GRAVE","`","Backquote",0.0,1.0,1.0,1.0],["1","1","Digit1",1.0,1.0,1.0,1.0],["2","2","Digit2",2.0,1.0,1.0,1.0],["3","3","Digit3",3.0,1.0,1.0,1.0],["4","4","Digit4",4.0,1.0,1.0,1.0],["5","5","Digit5",5.0,1.0,1.0,1.0],["6","6","Digit6",6.0,1.0,1.0,1.0],["7","7","Digit7",7.0,1.0,1.0,1.0],["8","8","Digit8",8.0,1.0,1.0,1.0],["9","9","Digit9",9.0,1.0,1.0,1.0],["0","0","Digit0",10.0,1.0,1.0,1.0],["MINUS","-","Minus",11.0,1.0,1.0,1.0],["EQUAL","=","Equal",12.0,1.0,1.0,1.0],["BACKSPACE","bksp","Backspace",13.0,1.0,2.0,1.0],["NUMLOCK","num","NumLock",15.25,1.0,1.0,1.0],["KP_DIVIDE","/","NumpadDivide",16.25,1.0,1.0,1.0],["KP_MULTIPLY","*","NumpadMultiply",17.25,1.0,1.0,1.0],["KP_SUBTRACT","-","NumpadSubtract",18.25,1.0,1.0,1.0],["TAB","tab","Tab",0.0,2.0,1.5,1.0],["Q","Q","KeyQ",1.5,2.0,1.0,1.0],["W","W","KeyW",2.5,2.0,1.0,1.0],["E","E","KeyE",3.5,2.0,1.0,1.0],["R","R","KeyR",4.5,2.0,1.0,1.0],["T","T","KeyT",5.5,2.0,1.0,1.0],["Y","Y","KeyY",6.5,2.0,1.0,1.0],["U","U","KeyU",7.5,2.0,1.0,1.0],["I","I","KeyI",8.5,2.0,1.0,1.0],["O","O","KeyO",9.5,2.0,1.0,1.0],["P","P","KeyP",10.5,2.0,1.0,1.0],["LBRACKET","[","BracketLeft",11.5,2.0,1.0,1.0],["RBRACKET","]","BracketRight",12.5,2.0,1.0,1.0],["BACKSLASH","\\","Backslash",13.5,2.0,1.5,1.0],["KP_7","7","Numpad7",15.25,2.0,1.0,1.0],["KP_8","8","Numpad8",16.25,2.0,1.0,1.0],["KP_9","9","Numpad9",17.25,2.0,1.0,1.0],["KP_ADD","+","NumpadAdd",18.25,2.0,1.0,2.0],["CAPSLOCK","caps","CapsLock",0.0,3.0,1.75,1.0],["A","A","KeyA",1.75,3.0,1.0,1.0],["S","S","KeyS",2.75,3.0,1.0,1.0],["D","D","KeyD",3.75,3.0,1.0,1.0],["F","F","KeyF",4.75,3.0,1.0,1.0],["G","G","KeyG",5.75,3.0,1.0,1.0],["H","H","KeyH",6.75,3.0,1.0,1.0],["J","J","KeyJ",7.75,3.0,1.0,1.0],["K","K","KeyK",8.75,3.0,1.0,1.0],["L","L","KeyL",9.75,3.0,1.0,1.0],["SEMICOLON",";","Semicolon",10.75,3.0,1.0,1.0],["QUOTE","'","Quote",11.75,3.0,1.0,1.0],["ENTER","enter","Enter",12.75,3.0,2.25,1.0],["KP_4","4","Numpad4",15.25,3.0,1.0,1.0],["KP_5","5","Numpad5",16.25,3.0,1.0,1.0],["KP_6","6","Numpad6",17.25,3.0,1.0,1.0],["LSHIFT","shift","ShiftLeft",0.0,4.0,2.25,1.0],["Z","Z","KeyZ",2.25,4.0,1.0,1.0],["X","X","KeyX",3.25,4.0,1.0,1.0],["C","C","KeyC",4.25,4.0,1.0,1.0],["V","V","KeyV",5.25,4.0,1.0,1.0],["B","B","KeyB",6.25,4.0,1.0,1.0],["N","N","KeyN",7.25,4.0,1.0,1.0],["M","M","KeyM",8.25,4.0,1.0,1.0],["COMMA",",","Comma",9.25,4.0,1.0,1.0],["DOT",".","Period",10.25,4.0,1.0,1.0],["SLASH","/","Slash",11.25,4.0,1.0,1.0],["RSHIFT","shift","ShiftRight",12.25,4.0,1.75,1.0],["UP","↑","ArrowUp",14.15,4.0,1.0,1.0],["KP_1","1","Numpad1",15.25,4.0,1.0,1.0],["KP_2","2","Numpad2",16.25,4.0,1.0,1.0],["KP_3","3","Numpad3",17.25,4.0,1.0,1.0],["KP_ENTER","ent","NumpadEnter",18.25,4.0,1.0,2.0],["LCTRL","ctrl","ControlLeft",0.0,5.0,1.25,1.0],["LGUI","super","MetaLeft",1.25,5.0,1.25,1.0],["LALT","alt","AltLeft",2.5,5.0,1.25,1.0],["SPACE","","Space",3.75,5.0,6.25,1.0],["RALT","alt","AltRight",10.0,5.0,1.0,1.0],["FN","fn","",11.0,5.0,1.0,1.0],["RCTRL","ctrl","ControlRight",12.0,5.0,1.0,1.0],["LEFT","←","ArrowLeft",13.1,5.0,1.0,1.0],["DOWN","↓","ArrowDown",14.15,5.0,1.0,1.0],["RIGHT","→","ArrowRight",15.2,5.0,1.0,1.0],["KP_0","0","Numpad0",16.25,5.0,1.0,1.0],["KP_DECIMAL",".","NumpadDecimal",17.25,5.0,1.0,1.0]]; // [name, label, code, x, y, w, h]
-const P = s => t => { t = Math.max(0, Math.min(1, t)); for (let i = 1; i < s.length; i++) if (t <= s[i][0]) { const [a, c0] = s[i-1], [b, c1] = s[i], f = (t - a) / (b - a || 1); return c0.map((v, j) => v + (c1[j] - v) * f); } return s[s.length-1][1]; };
-const hex = h => [1,3,5].map(i => parseInt(h.slice(i, i+2), 16) / 255);
-const pal = a => P(a.map(([t, h]) => [t, hex(h)]));
-const CHROMA = pal([[0,"#00F0FF"],[.28,"#6A00F4"],[.52,"#FF007F"],[.76,"#FF5400"],[1,"#00F0FF"]]);
-const FIRE = pal([[0,"#000000"],[.18,"#3A0200"],[.38,"#B80800"],[.6,"#FF4D00"],[.82,"#FFB700"],[1,"#FFFFE6"]]);
-const OCEAN = pal([[0,"#000000"],[.35,"#021A3A"],[.65,"#0088CC"],[.85,"#00D2FF"],[1,"#C8FAFF"]]);
-const AURORA = pal([[0,"#010814"],[.25,"#00384D"],[.5,"#00F2FE"],[.72,"#0BE881"],[.88,"#7D5FFF"],[1,"#FF007F"]]);
-const LASER = pal([[0,"#000000"],[.2,"#330000"],[.5,"#B80000"],[.75,"#FF1A1A"],[.92,"#FFA6A6"],[1,"#FFFFFF"]]);
-const VU = pal([[0,"#00FF3C"],[.2,"#78FF00"],[.4,"#FFE600"],[.6,"#FF7800"],[.8,"#FF1428"],[1,"#FFFFFF"]]);
-// smooth 3D value noise
-const hsh = (x, y, z) => { let n = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453; return n - Math.floor(n); };
-const sm = t => t * t * (3 - 2 * t);
-function noise(x, y, z) { const X = Math.floor(x), Y = Math.floor(y), Z = Math.floor(z), u = sm(x - X), v = sm(y - Y), w = sm(z - Z), l = (a, b, t) => a + (b - a) * t;
-  return l(l(l(hsh(X,Y,Z), hsh(X+1,Y,Z), u), l(hsh(X,Y+1,Z), hsh(X+1,Y+1,Z), u), v), l(l(hsh(X,Y,Z+1), hsh(X+1,Y,Z+1), u), l(hsh(X,Y+1,Z+1), hsh(X+1,Y+1,Z+1), u), v), w); }
-const fbm = (x, y, z) => (noise(x, y, z) + .5 * noise(2*x, 2*y, 2*z) + .25 * noise(4*x, 4*y, 4*z)) / 1.75;
-const cx = k => k[3] + k[5] / 2, cy = k => k[4] + k[6] / 2;
-const streams = Array.from({length: 22}, (_, i) => ({x: i * .87 + .5, s: 2 + (i * 7 % 9) / 4.5, o: i * 1.7, l: 3.4 + (i * 5 % 7) / 3.5}));
-const EFFECTS = {
-  chroma: (k, t) => CHROMA((((cx(k) + cy(k) * 1.3) / 12 - t * .2) % 1 + 1) % 1),
-  fire: (k, t) => { const x = cx(k), y = cy(k); let h = Math.pow(y / 5.5, 1.3) * .72 + (fbm(x * .35, y * .6 + t * 2.8, t * .4) - .4) * .9 + (noise(x * .8, y * .4 + t * 3.5, t * .8) - .5) * .5; if (y > 5) h = Math.max(h, .65 + .25 * Math.sin(t * 8 + x * 2)); return FIRE(h); },
-  aurora: (k, t) => { const x = cx(k), y = cy(k), a = fbm(x * .18 + t * .25, y * .35, t * .15), b = Math.sin(x * .45 - t * .6 + a * 2.5); return AURORA(Math.pow(Math.min(1, a * .75 + (b * .5 + .5) * .45), 1.3) * (1 - y / 5.5 * .3)).map(v => v * (.8 + .2 * Math.sin(t * 1.8 + x * .4))); },
-  ripple: (k, t) => { const d = Math.hypot(cx(k) - 7, cy(k) - 2.8); return OCEAN(Math.pow(Math.sin(d * 1.1 - t * 2.8) * .5 + .5, 2) / (1 + d * .06)); },
-  matrix: (k, t) => { let g = 0, w = 0; for (const s of streams) { const dx = Math.abs(cx(k) - s.x); if (dx > 1.3) continue; const gx = Math.exp(-dx * dx / .6), hy = -1.5 + ((t + s.o) % (10 / s.s)) * s.s, dy = cy(k) - hy; if (dy > -.35 && dy < .25) w += gx * (1 - Math.abs(dy + .05) / .35); else if (dy < 0 && dy > -s.l) g += Math.exp(-(-dy - .35) / s.l * 2.8) * gx; } return [Math.min(1, g * .05 + w * .9), Math.min(1, g + w), Math.min(1, g * .18 + w * .9)]; },
-  scanner: (k, t) => { const ph = t * 2 * Math.PI / 3.6, bx = .5 + (.5 - .5 * Math.cos(ph)) * 18, dir = Math.sin(ph) > 0 ? 1 : -1, dx = cx(k) - bx, tr = -dx * dir; return LASER(Math.max(.03, Math.exp(-((dx / .45) ** 2)), tr > 0 && tr < 4.2 ? (1 - tr / 4.2) ** 2.2 * .75 : 0)); },
-  viz: (k, t) => { const band = Math.min(17, Math.floor(cx(k) / 19.25 * 18)), e = Math.max(0, .55 + .45 * Math.sin(t * 3.1 + band * .7) * Math.sin(t * 1.3 + band * 1.9) - band * .018 + (band < 4 ? .25 * Math.max(0, Math.sin(t * 7.5)) : 0)), lvl = 1 - cy(k) / 6; return lvl < e ? VU(1 - cy(k) / 6.2) : [0, 0, 0]; },
+// Layout in key units; the board is 19.25 x 6. Entry: [name, label, code, x, y, w, h]
+const K=[];
+const row=(y,x,items)=>{for(const it of items){if(typeof it==="number"){x+=it;continue}const[n,l,c,w=1,h=1]=it;K.push([n,l,c,x,y,w,h]);x+=w}};
+const A=s=>[...s].map(c=>[c,c,"Key"+c]), D=s=>[...s].map(c=>[c,c,"Digit"+c]);
+const F=(a,b)=>Array.from({length:b-a+1},(_,i)=>["F"+(a+i),"f"+(a+i),"F"+(a+i)]);
+row(0,0,[["ESC","esc","Escape"],.75,...F(1,4),.5,...F(5,8),.5,...F(9,12),.5,["PRINTSCREEN","prt","PrintScreen"],["DELETE","del","Delete"],["PAGEUP","pgup","PageUp"],["PAGEDOWN","pgdn","PageDown"]]);
+row(1,0,[["GRAVE","`","Backquote"],...D("1234567890"),["MINUS","-","Minus"],["EQUAL","=","Equal"],["BACKSPACE","bksp","Backspace",2],.25,["NUMLOCK","num","NumLock"],["KP_DIVIDE","/","NumpadDivide"],["KP_MULTIPLY","*","NumpadMultiply"],["KP_SUBTRACT","-","NumpadSubtract"]]);
+row(2,0,[["TAB","tab","Tab",1.5],...A("QWERTYUIOP"),["LBRACKET","[","BracketLeft"],["RBRACKET","]","BracketRight"],["BACKSLASH","\\","Backslash",1.5],.25,["KP_7","7","Numpad7"],["KP_8","8","Numpad8"],["KP_9","9","Numpad9"],["KP_ADD","+","NumpadAdd",1,2]]);
+row(3,0,[["CAPSLOCK","caps","CapsLock",1.75],...A("ASDFGHJKL"),["SEMICOLON",";","Semicolon"],["QUOTE","'","Quote"],["ENTER","enter","Enter",2.25],.25,["KP_4","4","Numpad4"],["KP_5","5","Numpad5"],["KP_6","6","Numpad6"]]);
+row(4,0,[["LSHIFT","shift","ShiftLeft",2.25],...A("ZXCVBNM"),["COMMA",",","Comma"],["DOT",".","Period"],["SLASH","/","Slash"],["RSHIFT","shift","ShiftRight",1.75],.15,["UP","↑","ArrowUp"],.1,["KP_1","1","Numpad1"],["KP_2","2","Numpad2"],["KP_3","3","Numpad3"],["KP_ENTER","ent","NumpadEnter",1,2]]);
+row(5,0,[["LCTRL","ctrl","ControlLeft",1.25],["LGUI","super","MetaLeft",1.25],["LALT","alt","AltLeft",1.25],["SPACE","","Space",6.25],["RALT","alt","AltRight"],["FN","fn",""],["RCTRL","ctrl","ControlRight"],.1,["LEFT","←","ArrowLeft"],.05,["DOWN","↓","ArrowDown"],.05,["RIGHT","→","ArrowRight"],.05,["KP_0","0","Numpad0"],["KP_DECIMAL",".","NumpadDecimal"]]);
+const byCode=Object.fromEntries(K.map((k,i)=>[k[2],i])),byName=Object.fromEntries(K.map((k,i)=>[k[0],i]));
+const cx=k=>k[3]+k[5]/2, cy=k=>k[4]+k[6]/2;
+
+// Palettes and noise
+const P=s=>t=>{t=Math.min(1,Math.max(0,t));for(let i=1;i<s.length;i++)if(t<=s[i][0]){const[a,c]=s[i-1],[b,d]=s[i],f=(t-a)/(b-a||1);return c.map((v,j)=>v+(d[j]-v)*f)}return s[s.length-1][1]};
+const pal=a=>P(a.map(([t,h])=>[t,[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255)]));
+const CHROMA=pal([[0,"#00F0FF"],[.28,"#6A00F4"],[.52,"#FF007F"],[.76,"#FF5400"],[.86,"#FFC400"],[.93,"#2BFF88"],[1,"#00F0FF"]]);
+const FIRE=pal([[0,"#000000"],[.18,"#3A0200"],[.38,"#B80800"],[.6,"#FF4D00"],[.82,"#FFB700"],[1,"#FFFFE6"]]);
+const OCEAN=pal([[0,"#000000"],[.35,"#021A3A"],[.65,"#0088CC"],[.85,"#00D2FF"],[1,"#C8FAFF"]]);
+const AURORA=pal([[0,"#010814"],[.25,"#00384D"],[.5,"#00F2FE"],[.72,"#0BE881"],[.88,"#7D5FFF"],[1,"#FF007F"]]);
+const LASER=pal([[0,"#000000"],[.2,"#330000"],[.5,"#B80000"],[.75,"#FF1A1A"],[.92,"#FFA6A6"],[1,"#FFFFFF"]]);
+const VU=pal([[0,"#00FF3C"],[.2,"#78FF00"],[.4,"#FFE600"],[.6,"#FF7800"],[.8,"#FF1428"],[1,"#FFFFFF"]]);
+const hsh=(x,y,z)=>{const n=Math.sin(x*127.1+y*311.7+z*74.7)*43758.5453;return n-Math.floor(n)};
+const sm=t=>t*t*(3-2*t), lr=(a,b,t)=>a+(b-a)*t;
+function noise(x,y,z){const X=Math.floor(x),Y=Math.floor(y),Z=Math.floor(z),u=sm(x-X),v=sm(y-Y),w=sm(z-Z);
+  return lr(lr(lr(hsh(X,Y,Z),hsh(X+1,Y,Z),u),lr(hsh(X,Y+1,Z),hsh(X+1,Y+1,Z),u),v),lr(lr(hsh(X,Y,Z+1),hsh(X+1,Y,Z+1),u),lr(hsh(X,Y+1,Z+1),hsh(X+1,Y+1,Z+1),u),v),w)}
+const fbm=(x,y,z)=>(noise(x,y,z)+.5*noise(2*x,2*y,2*z)+.25*noise(4*x,4*y,4*z))/1.75;
+const EFFECTS={
+  chroma:(k,t)=>CHROMA((((cx(k)+cy(k)*1.3)/12-t*.2)%1+1)%1),
+  fire:(k,t)=>{const x=cx(k),y=cy(k);let h=Math.pow(y/5.5,1.3)*.72+(fbm(x*.35,y*.6+t*2.8,t*.4)-.4)*.9+(noise(x*.8,y*.4+t*3.5,t*.8)-.5)*.5;if(y>5)h=Math.max(h,.65+.25*Math.sin(t*8+x*2));return FIRE(h)},
+  aurora:(k,t)=>{const x=cx(k),y=cy(k),a=fbm(x*.18+t*.25,y*.35,t*.15),b=Math.sin(x*.45-t*.6+a*2.5);return AURORA(Math.pow(Math.min(1,a*.75+(b*.5+.5)*.45),1.3)*(1-y/5.5*.3)).map(v=>v*(.8+.2*Math.sin(t*1.8+x*.4)))},
+  ripple:(k,t)=>{const d=Math.hypot(cx(k)-7,cy(k)-2.8);return OCEAN(Math.pow(Math.sin(d*1.1-t*2.8)*.5+.5,2)/(1+d*.06))},
+  scanner:(k,t)=>{const ph=t*2*Math.PI/3.6,bx=.5+(.5-.5*Math.cos(ph))*18,dir=Math.sin(ph)>0?1:-1,dx=cx(k)-bx,tr=-dx*dir;return LASER(Math.max(.03,Math.exp(-((dx/.45)**2)),tr>0&&tr<4.2?(1-tr/4.2)**2.2*.75:0))},
+  visualizer:(k,t)=>{const b=Math.min(17,Math.floor(cx(k)/19.25*18)),e=Math.max(0,.55+.45*Math.sin(t*3.1+b*.7)*Math.sin(t*1.3+b*1.9)-b*.018+(b<4?.25*Math.max(0,Math.sin(t*7.5)):0));return 1-cy(k)/6<e?VU(1-cy(k)/6.2):[0,0,0]}
 };
-let current = "chroma";
-const chips = document.getElementById("chips");
-const select = name => { current = name; for (const c of chips.children) c.classList.toggle("on", c.textContent === name); };
-for (const name of [...Object.keys(EFFECTS), "reactive"]) { const b = document.createElement("button"); b.className = "chip" + (name === current ? " on" : ""); b.textContent = name; b.onclick = () => { select(name); b.blur(); }; chips.appendChild(b); }
 
-function board(canvas) { const g = canvas.getContext("2d"); const fit = () => { const w = canvas.clientWidth, d = devicePixelRatio || 1; canvas.width = w * d; canvas.height = w * 6 / 19.25 * d; canvas.style.height = w * 6 / 19.25 + "px"; }; fit(); addEventListener("resize", fit); return g; }
-function draw(g, colors) { const W = g.canvas.width, s = W / 19.25, r = s * .16; g.clearRect(0, 0, W, g.canvas.height);
-  KEYS.forEach((k, i) => { const [cr, cg, cb] = colors[i], x = k[3] * s + s * .06, y = k[4] * s + s * .06, w = k[5] * s - s * .12, h = k[6] * s - s * .12, lum = Math.max(cr, cg, cb), rgb = `rgb(${cr * 255 | 0},${cg * 255 | 0},${cb * 255 | 0})`;
-    g.shadowBlur = lum * s * .55; g.shadowColor = rgb; g.fillStyle = "#14141b"; g.beginPath(); g.roundRect(x, y, w, h, r); g.fill();
-    g.shadowBlur = 0; g.fillStyle = `rgba(${cr * 255 | 0},${cg * 255 | 0},${cb * 255 | 0},${.18 + .82 * Math.min(1, lum * 1.4)})`; g.fill();
-    g.strokeStyle = "#ffffff10"; g.stroke();
-    if (k[1]) { g.fillStyle = cr * .3 + cg * .59 + cb * .11 > .55 ? "#0009" : "#fff8"; g.font = `600 ${s * .2}px ui-monospace,monospace`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(k[1], x + w / 2, y + h / 2); } }); }
+// Drawing
+function draw(g,col){const c=g.canvas,W=c.width,s=W/19.25,lab=s/(devicePixelRatio||1)>=22;g.clearRect(0,0,W,c.height);
+  K.forEach((k,i)=>{const[r,gr,b]=col[i],x=k[3]*s+s*.05,y=k[4]*s+s*.05,w=k[5]*s-s*.1,h=k[6]*s-s*.1,l=Math.max(r,gr,b),rgb=[r,gr,b].map(v=>v*255|0).join();
+    g.shadowBlur=l*s*.5;g.shadowColor=`rgb(${rgb})`;g.fillStyle="#17191f";g.beginPath();g.roundRect(x,y,w,h,s*.14);g.fill();
+    g.shadowBlur=0;g.fillStyle=`rgba(${rgb},${.15+.85*Math.min(1,l*1.4)})`;g.fill();
+    if(lab&&k[1]){g.fillStyle=r*.3+gr*.59+b*.11>.5?"#000a":"#ffffff90";g.font=`500 ${s*.24}px "Schibsted Grotesk",system-ui,sans-serif`;g.textAlign="center";g.textBaseline="middle";g.fillText(k[1],x+w/2,y+h/2)}})}
+const view=(c,redraw)=>{const g=c.getContext("2d");new ResizeObserver(()=>{const d=devicePixelRatio||1;c.width=Math.round(c.clientWidth*d);c.height=Math.round(c.clientHeight*d);redraw()}).observe(c);return g};
+const hit=(c,e)=>{const s=c.clientWidth/19.25,x=e.offsetX/s,y=e.offsetY/s;return K.findIndex(k=>x>=k[3]&&x<k[3]+k[5]&&y>=k[4]&&y<k[4]+k[6])};
+const say=m=>document.getElementById("live").textContent=m;
 
-const kb = document.getElementById("kb"), main = board(kb), strikes = [], t0 = performance.now(), now = () => (performance.now() - t0) / 1000;
-const byCode = Object.fromEntries(KEYS.map((k, i) => [k[2], i])), byName = Object.fromEntries(KEYS.map((k, i) => [k[0], i]));
-const HUES = [[0,.94,1],[0,1,.7],[.47,.39,1],[1,0,.55],[1,.7,0]], GHOST = ["H","I","V","E","C","T","L","ENTER"];
-const HOME = new Set(["A","S","D","G","H","K","L","SEMICOLON","QUOTE"]), HOMING = new Set(["F","J"]);
-let hits = 0, lastReal = -10, ghostAt = 0, ghostIdx = 0;
-// a real key press or tap switches to reactive; ghost strikes (the idle demo) don't
-function strike(i, real) { strikes.push({i, t: now(), c: HUES[hits++ % 5]}); if (real) { lastReal = now(); if (current !== "reactive") select("reactive"); } }
-addEventListener("keydown", e => { const i = byCode[e.code]; if (i === undefined || e.repeat || e.ctrlKey || e.metaKey || e.altKey) return; strike(i, true); if (["Space", "ArrowUp", "ArrowDown", "Tab", "Quote", "Slash"].includes(e.code)) e.preventDefault(); });
-kb.addEventListener("pointerdown", e => { const s = kb.clientWidth / 19.25, x = e.offsetX / s, y = e.offsetY / s, i = KEYS.findIndex(k => x >= k[3] && x < k[3] + k[5] && y >= k[4] && y < k[4] + k[6]); if (i >= 0) strike(i, true); });
-function frame() { const t = now();
-  while (strikes.length && t - strikes[0].t > 1.3) strikes.shift();
-  if (current === "reactive" && t - lastReal > 3 && t >= ghostAt) { const g = GHOST[ghostIdx++ % GHOST.length]; strike(byName[g], false); ghostAt = t + (g === "ENTER" ? 2.2 : .18); }
-  const fx = EFFECTS[current], breath = .2 + .15 * Math.sin(t * 1.8);
-  const colors = KEYS.map(k => fx ? fx(k, t) : HOMING.has(k[0]) ? [1, .63, .08].map(v => v * Math.min(1, breath * 1.5)) : HOME.has(k[0]) ? [0, .24, .35].map(v => v * breath) : [0, 0, 0]);
-  for (const st of strikes) { const dt = t - st.t, o = KEYS[st.i]; KEYS.forEach((k, i) => { let a = 0; if (i === st.i) a = Math.exp(-dt / .35) + Math.max(0, 1 - dt * 9); const off = Math.abs(Math.hypot(cx(k) - cx(o), cy(k) - cy(o)) - dt * 12); if (off < 1.3 && dt * 12 < 9) a += Math.cos(off / 1.3 * Math.PI / 2) ** 2 * Math.exp(-dt / .45) * .85; if (a > 0) colors[i] = colors[i].map((v, j) => Math.min(1, v + st.c[j] * a + (i === st.i ? Math.max(0, 1 - dt * 9) : 0))); }); }
-  draw(main, colors); requestAnimationFrame(frame); }
-frame();
+// Hero keyboard
+const kb=document.getElementById("kb"),fx=document.getElementById("fx"),t0=performance.now(),now=()=>(performance.now()-t0)/1000;
+const reduce=matchMedia("(prefers-reduced-motion: reduce)");
+const HUES=[[0,.94,1],[0,1,.7],[.47,.39,1],[1,0,.55],[1,.7,0]],GHOST=["H","I","V","E","C","T","L","ENTER"];
+const HOME=new Set(["A","S","D","G","H","K","L","SEMICOLON","QUOTE"]),HOMING=new Set(["F","J"]);
+let cur="chroma",strikes=[],hits=0,lastReal=-10,ghostAt=0,gi=0,raf=0,visible=true;
+const g1=view(kb,()=>render());
+const select=n=>{cur=n;for(const b of fx.children)b.setAttribute("aria-pressed",String(b.dataset.fx===n));say(n+" selected");render()};
+for(const n of [...Object.keys(EFFECTS),"reactive"]){const b=document.createElement("button");b.type="button";b.dataset.fx=n;b.textContent=n[0].toUpperCase()+n.slice(1);b.setAttribute("aria-pressed",String(n===cur));b.onclick=()=>select(n);fx.appendChild(b)}
+function strike(i,real){strikes.push({i,t:now(),c:HUES[hits++%5]});if(real){lastReal=now();if(cur!=="reactive")select("reactive")}render()}
+kb.addEventListener("keydown",e=>{const i=byCode[e.code];if(i===undefined||e.repeat||e.ctrlKey||e.metaKey||e.altKey)return;if(e.code==="Space"||e.code.startsWith("Arrow"))e.preventDefault();strike(i,true)});
+kb.addEventListener("pointerdown",e=>{const i=hit(kb,e);if(i>=0)strike(i,true)});
+function render(){const t=now();
+  while(strikes.length&&t-strikes[0].t>1.3)strikes.shift();
+  if(cur==="reactive"&&t-lastReal>3&&t>=ghostAt&&!reduce.matches){const g=GHOST[gi++%GHOST.length];strikes.push({i:byName[g],t,c:HUES[hits++%5]});ghostAt=t+(g==="ENTER"?2.2:.18)}
+  const f=EFFECTS[cur],br=.2+.15*Math.sin(t*1.8);
+  const col=K.map(k=>f?f(k,t):HOMING.has(k[0])?[1,.63,.08].map(v=>v*Math.min(1,br*1.5)):HOME.has(k[0])?[0,.24,.35].map(v=>v*br):[0,0,0]);
+  for(const s of strikes){const dt=t-s.t,o=K[s.i];K.forEach((k,i)=>{let a=0;if(i===s.i)a=Math.exp(-dt/.35)+Math.max(0,1-dt*9);const off=Math.abs(Math.hypot(cx(k)-cx(o),cy(k)-cy(o))-dt*12);if(off<1.3&&dt*12<9)a+=Math.cos(off/1.3*Math.PI/2)**2*Math.exp(-dt/.45)*.85;if(a>0)col[i]=col[i].map((v,j)=>Math.min(1,v+s.c[j]*a))})}
+  draw(g1,col)}
+// Animate only while the board is on screen, the tab is visible and motion is allowed
+function loop(){if(!raf&&visible&&!document.hidden&&!reduce.matches)raf=requestAnimationFrame(()=>{raf=0;render();loop()})}
+new IntersectionObserver(e=>{visible=e[0].isIntersecting;loop()}).observe(kb);
+document.addEventListener("visibilitychange",loop);reduce.addEventListener("change",()=>{render();loop()});
+loop();
 
-// static HUD illustration (Super held)
-const hud = board(document.getElementById("hudkb")), C = {L: [0,.94,1], W: [1,.69,0], M: [.06,.85,.49], D: [.96,.25,.37], H: [1,1,1], A: [0,.94,1], O: [.55,.57,.6], E: [.2,.25,.33]};
-const HUD = {Q: "D", W: "L", E: "L", N: "L", GRAVE: "L", U: "L", A: "L", C: "L", V: "L", X: "L", D: "L", B: "L", L: "L", BACKSPACE: "L", T: "L", Y: "L", SLASH: "L", ENTER: "L", F: "W", M: "W", SPACE: "W", S: "W", J: "W", K: "W", I: "W", O: "W", TAB: "W", G: "W", SEMICOLON: "W", LEFT: "W", RIGHT: "W", UP: "W", DOWN: "W", MINUS: "M", EQUAL: "M", LBRACKET: "M", RBRACKET: "M", R: "M", P: "M", COMMA: "M", DOT: "M", LGUI: "H", PRINTSCREEN: "L", DELETE: "L", "3": "A", "1": "O", "2": "O", "5": "O", "4": "E", "6": "E", "7": "E", "8": "E", "9": "E", "0": "E"};
-for (let f = 1; f <= 11; f++) HUD["F" + f] = "L";
-const G = {KP_1: [0,.73,.37], KP_4: [0,.84,.55], NUMLOCK: 0, KP_0: [.51,.31,1], KP_2: [.51,.31,1], KP_5: [.51,.31,1], KP_8: [.51,.31,1], KP_DECIMAL: [.08,.86,.43], KP_3: [.08,.86,.43], KP_6: [.08,.86,.43], KP_9: [.08,.86,.43], KP_MULTIPLY: [.08,.86,.43], KP_ENTER: [.18,.63,1], KP_ADD: [.18,.63,1], KP_SUBTRACT: [.18,.63,1]};
-draw(hud, KEYS.map(k => HUD[k[0]] ? C[HUD[k[0]]] : G[k[0]] || [0, 0, 0]));
-addEventListener("resize", () => draw(hud, KEYS.map(k => HUD[k[0]] ? C[HUD[k[0]]] : G[k[0]] || [0, 0, 0])));
-document.querySelector("[data-copy]").onclick = e => { navigator.clipboard.writeText(e.target.closest(".term").querySelector("pre").innerText); e.target.textContent = "copied"; };
+// HUD illustration
+const CAT={L:[0,.94,1],W:[1,.69,0],M:[.06,.85,.49],D:[.96,.25,.37],S:[.6,.4,1],A:[0,.94,1],O:[1,1,1],E:[.2,.25,.33],H:[1,1,1],G:[.62,.8,1],X:[0,0,0]};
+const INFO={ENTER:["L","Open a terminal"],D:["L","App launcher"],B:["L","Browser"],E:["L","File manager"],Q:["D","Close the active window"],M:["D","Exit Hyprland"],F:["W","Toggle fullscreen"],V:["W","Toggle floating"],LEFT:["W","Move focus left"],RIGHT:["W","Move focus right"],UP:["W","Move focus up"],DOWN:["W","Move focus down"],R:["S","Enter the resize submap"],MINUS:["M","Volume down"],EQUAL:["M","Volume up"],P:["M","Play or pause"],LGUI:["H","Super, held"]};
+for(const n of "1234567890"){const s={1:"O",2:"O",3:"A",5:"O"}[n]||"E";INFO[n]=[s,"Workspace "+n+", "+{O:"has windows",A:"active",E:"empty"}[s]]}
+for(const[n,f,ks]of[["Volume",.5,["KP_1","KP_4","KP_7","NUMLOCK"]],["CPU",.6,["KP_0","KP_2","KP_5","KP_8","KP_DIVIDE"]],["RAM",.4,["KP_DECIMAL","KP_3","KP_6","KP_9","KP_MULTIPLY"]],["Battery",.7,["KP_ENTER","KP_ADD","KP_SUBTRACT"]]])ks.forEach((k,i)=>INFO[k]=[i<Math.round(f*ks.length)?"G":"X",n+" at "+f*100+"%"]);
+const hudCols=K.map(k=>INFO[k[0]]?CAT[INFO[k[0]][0]]:[0,0,0]);
+const hud=document.getElementById("hudkb"),out=document.getElementById("readout"),idle=out.textContent;
+const g2=view(hud,()=>draw(g2,hudCols));
+const probe=e=>{const i=hit(hud,e);if(i<0){out.textContent=idle;return}const k=K[i],n=INFO[k[0]];out.textContent=!n?"No bind on "+(k[1]||"space")+".":"GX".includes(n[0])?n[1]:"Super + "+(k[1]||"space")+": "+n[1]};
+hud.addEventListener("pointermove",probe);hud.addEventListener("pointerdown",probe);hud.addEventListener("pointerleave",()=>out.textContent=idle);
+
+// Copy buttons
+document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",async()=>{
+  const pre=b.closest(".term").querySelector("pre");let label="Copied";
+  try{await navigator.clipboard.writeText(pre.innerText)}
+  catch{const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r);label="Press Ctrl+C"}
+  b.textContent=label;say(label==="Copied"?"Commands copied":"Clipboard blocked. Commands selected, press Ctrl+C.");
+  setTimeout(()=>b.textContent="Copy",2000)}));
 </script>
 </body>
 </html>
