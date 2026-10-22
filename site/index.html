@@ -7,7 +7,7 @@
 <meta name="description" content="Modes, per-key colors, live animations, a music visualizer and a Hyprland keybind HUD for the Kreo Hive 98. No vendor app.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://hivectl.vercel.app/">
-<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4IiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDBGMEZGIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iLjM4IiBzdG9wLWNvbG9yPSIjN0M0REZGIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iLjciIHN0b3AtY29sb3I9IiNGRjAwN0YiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkZCNzAwIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGZpbHRlciBpZD0iZ2xvdyIgeD0iLTYwJSIgeT0iLTYwJSIgd2lkdGg9IjIyMCUiIGhlaWdodD0iMjIwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNiIvPjwvZmlsdGVyPgogIDwvZGVmcz4KICA8cGF0aCBkPSJNNjQgOSBMMTExLjYgMzYuNSBWOTEuNSBMNjQgMTE5IEwxNi40IDkxLjUgVjM2LjUgWiIgZmlsbD0iIzBCMEIxMSIgc3Ryb2tlPSJ1cmwoI2cpIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cmVjdCB4PSI0MyIgeT0iNDMiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgcng9IjEwIiBmaWxsPSJ1cmwoI2cpIiBmaWx0ZXI9InVybCgjZ2xvdykiIG9wYWNpdHk9Ii44Ii8+CiAgPHJlY3QgeD0iNDMiIHk9IjQzIiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIHJ4PSIxMCIgZmlsbD0idXJsKCNnKSIvPgogIDxyZWN0IHg9IjQ5LjUiIHk9IjQ4LjUiIHdpZHRoPSIyOSIgaGVpZ2h0PSIyNCIgcng9IjYiIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9Ii4yMiIvPgo8L3N2Zz4K" type="image/svg+xml">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hivectl.vercel.app/">
 <meta property="og:title" content="hivectl: lighting control for the Kreo Hive 98 on Linux">
@@ -80,6 +80,13 @@ footer div{display:flex;gap:20px}
 @media (pointer:coarse),(max-width:760px){nav a{display:inline-block;padding:10px 2px}.fx button{min-height:42px;padding:8px 14px}.term button{min-height:38px}}
 @media (max-width:600px){.term pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12.5px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.brand-logo {
+  display: block;
+  width: clamp(56px, 7vw, 76px);
+  height: auto;
+  margin: 0 0 24px;
+}
 </style>
 </head>
 <body>
@@ -92,7 +99,8 @@ footer div{display:flex;gap:20px}
 <main>
   <div class="hero">
     <div>
-      <h1>Lighting control for the Kreo Hive 98 on Linux</h1>
+<img class="brand-logo" src="logo.svg" width="76" height="76" alt="hivectl logo">
+<h1>Lighting control for the Kreo Hive 98 on Linux</h1>
       <p class="lead">Pick a hardware mode, color single keys, run live animations or a music visualizer, all from the terminal. No vendor app needed.</p>
     </div>
     <div class="start">
